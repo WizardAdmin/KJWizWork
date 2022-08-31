@@ -761,6 +761,7 @@ namespace WizWork
 
                     //2022-08-26 자주검사 유무 확인 조건 추가
                     //GITTEST
+                    //GITTEST12
                     if (InspectAutoYN())
                     {
                         if (SaveData())
