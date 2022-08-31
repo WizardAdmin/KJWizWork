@@ -188,12 +188,12 @@ namespace WizWork
                         btnimage(2);
 
                         //2022-08-25 자주검사등록은 공정작업의 자주검사 버튼만 사용하게 주석처리 후 메세지 처리(업체요청)
-                        WizCommon.Popup.MyMessageBox.ShowBox("자주검사 등록은 공정작업의 자주검사 버튼을 \r사용해주세요", "[자주 검사]", 0, 1);
-                        return;
+                        //WizCommon.Popup.MyMessageBox.ShowBox("자주검사 등록은 공정작업의 자주검사 버튼을 \r사용해주세요", "[자주 검사]", 0, 1);
+                        //return;
 
-                        //frm_tins_InspectAuto_U child3 = new frm_tins_InspectAuto_U();
-                        //form = child3;
-                        //break;
+                        frm_tins_InspectAuto_U child3 = new frm_tins_InspectAuto_U();
+                        form = child3;
+                        break;
 
                     case 3://공정작업
                         

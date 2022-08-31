@@ -31,9 +31,9 @@ namespace WizWork
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_tprc_PlanInputMolded_Q));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -210,7 +210,7 @@ namespace WizWork
             // 
             this.pnlForm.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlForm.Controls.Add(this.tlpForm);
-            this.pnlForm.Controls.Add(this.txtBuyerArticle);
+            this.pnlForm.Controls.Add(this.cboBuyerArticle);
             this.pnlForm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlForm.Location = new System.Drawing.Point(0, 0);
             this.pnlForm.Name = "pnlForm";
@@ -676,9 +676,9 @@ namespace WizWork
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel6.Controls.Add(this.chkProcess, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.txtBuyerArticle, 3, 0);
             this.tableLayoutPanel6.Controls.Add(this.chkBuyerArticle, 2, 0);
             this.tableLayoutPanel6.Controls.Add(this.cboProcess, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.cboBuyerArticle, 3, 0);
             this.tableLayoutPanel6.Location = new System.Drawing.Point(13, -1);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
@@ -749,10 +749,11 @@ namespace WizWork
             this.cboBuyerArticle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboBuyerArticle.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.cboBuyerArticle.FormattingEnabled = true;
-            this.cboBuyerArticle.Location = new System.Drawing.Point(303, 3);
+            this.cboBuyerArticle.Location = new System.Drawing.Point(962, 71);
             this.cboBuyerArticle.Name = "cboBuyerArticle";
             this.cboBuyerArticle.Size = new System.Drawing.Size(145, 38);
             this.cboBuyerArticle.TabIndex = 206;
+            this.cboBuyerArticle.Visible = false;
             this.cboBuyerArticle.DropDown += new System.EventHandler(this.cboBuyerArticle_DropDown);
             this.cboBuyerArticle.SelectedIndexChanged += new System.EventHandler(this.cboBuyerArticle_SelectedIndexChanged);
             // 
@@ -832,14 +833,14 @@ namespace WizWork
             this.grdData.AllowUserToAddRows = false;
             this.grdData.AllowUserToResizeRows = false;
             this.grdData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.grdData.ColumnHeadersHeight = 35;
             this.grdData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.grdData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -858,21 +859,21 @@ namespace WizWork
             this.MachineID,
             this.CreateUserID,
             this.SHWorkingYN});
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.grdData.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grdData.DefaultCellStyle = dataGridViewCellStyle5;
             this.grdData.Location = new System.Drawing.Point(7, 9);
             this.grdData.MultiSelect = false;
             this.grdData.Name = "grdData";
             this.grdData.ReadOnly = true;
             this.grdData.RowHeadersVisible = false;
-            dataGridViewCellStyle21.Font = new System.Drawing.Font("굴림", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.grdData.RowsDefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("굴림", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.grdData.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.grdData.RowTemplate.Height = 23;
             this.grdData.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.grdData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -1191,13 +1192,12 @@ namespace WizWork
             this.txtBuyerArticle.BackColor = System.Drawing.Color.White;
             this.txtBuyerArticle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBuyerArticle.Font = new System.Drawing.Font("맑은 고딕", 18F, System.Drawing.FontStyle.Bold);
-            this.txtBuyerArticle.Location = new System.Drawing.Point(931, 27);
+            this.txtBuyerArticle.Location = new System.Drawing.Point(302, 2);
             this.txtBuyerArticle.Margin = new System.Windows.Forms.Padding(2);
             this.txtBuyerArticle.Name = "txtBuyerArticle";
             this.txtBuyerArticle.Size = new System.Drawing.Size(130, 39);
             this.txtBuyerArticle.TabIndex = 206;
             this.txtBuyerArticle.Text = "8MG";
-            this.txtBuyerArticle.Visible = false;
             this.txtBuyerArticle.WordWrap = false;
             this.txtBuyerArticle.Click += new System.EventHandler(this.txtBuyerArticle_Click);
             this.txtBuyerArticle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBuyerArticleNo_KeyPress);
@@ -1213,7 +1213,6 @@ namespace WizWork
             this.Text = "공정작업";
             this.Load += new System.EventHandler(this.Frm_tprc_PlanInput_Q_Load);
             this.pnlForm.ResumeLayout(false);
-            this.pnlForm.PerformLayout();
             this.tlpForm.ResumeLayout(false);
             this.pnlRight.ResumeLayout(false);
             this.tlpRight.ResumeLayout(false);
@@ -1232,6 +1231,7 @@ namespace WizWork
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutPanel6.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();

@@ -81,7 +81,7 @@ namespace WizWork
                 cboProcess.SelectedIndex = 1;
             }
 
-            SetBuyerArticleComboBox(); //2022-08-25 품번 콤보박스 초기값 설정
+            //SetBuyerArticleComboBox(); //2022-08-25 품번 콤보박스 초기값 설정
 
             // ☆★ Activated 시 조회 및 작업 공정 버튼 세팅 ← 2020.10.19 위의 공정세팅이 되어있지 않을시에는, 화면 종료를 위해서. (로드 이벤트 후 바로 엑티브 이벤트 발생함)
             // 디자인단에서 설정한 메서드를 소스에서 설정함.
@@ -540,26 +540,26 @@ namespace WizWork
             // 품번 기입여부 체크
             if (chkBuyerArticle.Checked)
             {
-                //if (this.cboBuyerArticle.Text == "" || cboBuyerArticle.Text == string.Empty)
+                if (this.txtBuyerArticle.Text == "" || txtBuyerArticle.Text == string.Empty)
+                {
+                    Message[0] = "[검색조건]";
+                    Message[1] = "품번 을 입력하시기 바랍니다.!!";
+                    WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 0, 1);
+                    this.txtBuyerArticle.Focus();
+
+                    return;
+                }
+
+                //if (chkBuyerArticle.Checked == false || (chkBuyerArticle.Checked == true && cboBuyerArticle.SelectedIndex == 0)) //공정체크 : N
                 //{
-                //    Message[0] = "[검색조건]";
-                //    Message[1] = "품번 을 입력하시기 바랍니다.!!";
-                //    WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 0, 1);
-                //    this.txtBuyerArticle.Focus();
-
-                //    return;
+                //    intnChkBuyerArticle = 0;
+                //    strBuyerArticle = "";
                 //}
-
-                if (chkBuyerArticle.Checked == false || (chkBuyerArticle.Checked == true && cboBuyerArticle.SelectedIndex == 0)) //공정체크 : N
-                {
-                    intnChkBuyerArticle = 0;
-                    strBuyerArticle = "";
-                }
-                else
-                {
+                //else
+                //{
                     intnChkBuyerArticle = 1;
-                    strBuyerArticle = cboBuyerArticle.Text.Trim();
-                }
+                    strBuyerArticle = txtBuyerArticle.Text.Trim();
+                //}
             }
 
 
@@ -2520,12 +2520,12 @@ namespace WizWork
 
         private void cboBuyerArticle_DropDown(object sender, EventArgs e) //2022-08-25 콤보박스를 볼때마다 일자, 공정조건에 따라 다르게 나타나야 되어 볼때마다 다시 값 설정
         {
-            SetBuyerArticleComboBox();
+            //SetBuyerArticleComboBox();
         }
 
         private void cboBuyerArticle_SelectedIndexChanged(object sender, EventArgs e) //2022-08-25 전체를 추가하여 무조건 체크처리함
         {
-            chkBuyerArticle.Checked = true;
+            //chkBuyerArticle.Checked = true;
         }
         #endregion
 

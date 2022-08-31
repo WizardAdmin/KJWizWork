@@ -760,8 +760,8 @@ namespace WizWork
                     }
 
                     //2022-08-26 자주검사 유무 확인 조건 추가
-                    if (InspectAutoYN())
-                    {
+                    //if (InspectAutoYN())
+                    //{
                         if (SaveData())
                         {
                             LogData.LogSave(this.GetType().Name, "C"); //2022-06-22 저장
@@ -773,11 +773,11 @@ namespace WizWork
                             FillGridData("0");
                             setClear();
                         }
-                    }
-                    else
-                    {
-                        return;
-                    }
+                    //}
+                    //else
+                    //{
+                    //    return;
+                    //}
                 }
             }
             catch (Exception ex)
