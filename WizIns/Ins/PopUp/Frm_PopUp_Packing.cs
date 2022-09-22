@@ -717,12 +717,12 @@ namespace WizIns
 
                     list_Data.Add(Lib.CheckNull(dr["InBoxID"].ToString()));// 공정라벨
                     list_Data.Add(Lib.CheckNull(dr["KCustom"].ToString()));// 업체명
-                    //list_Data.Add(Lib.CheckNull(dr["Article"].ToString()));// 품명
                     list_Data.Add(Lib.CheckNull(dr["BuyerArticleNo"].ToString()));// 품번
                     list_Data.Add(Lib.stringFormatN0(Lib.ConvertDouble(Lib.CheckNull(dr["PackQty"].ToString()))) + " EA");// 수량
                     list_Data.Add(Lib.CheckNull(dr["Name"].ToString()));// 작업자
                     list_Data.Add(Lib.DatePickerFormat(Lib.CheckNull(dr["PackDate"].ToString())));// 일자
-                    list_Data.Add(Lib.CheckNull(dr["CreateTime"].ToString())); //시간
+                    list_Data.Add(Lib.CheckNull(dr["Article"].ToString()));// 품명
+                    //list_Data.Add(Lib.CheckNull(dr["CreateTime"].ToString())); //시간
                     //list_Data.Add(Lib.stringFormatN0(Lib.ConvertDouble(Lib.CheckNull(dr["PackQty"].ToString()))));// 수량
                     //list_Data.Add(Lib.CheckNull(dr["Name"].ToString()));// 작업자
                     //list_Data.Add(Lib.stringFormatN0(Lib.ConvertDouble(Lib.CheckNull(dr["DefectQty"].ToString()))));// 불량수량 YS 제거요청으로 인한 주석처리 2020.11.21.KGH
@@ -1721,8 +1721,8 @@ namespace WizIns
                                 {
                                     // 바코드 글자 세팅
                                     int intx = list_m_tItem[i].x;
-                                    int inty = list_m_tItem[i].y + 46;
-                                    int fontheight = 50;
+                                    int inty = list_m_tItem[i].y + 36;
+                                    int fontheight = 40;
                                     int rotation = 0;
                                     int fontstyle = 0;
                                     int fontunderline = 0;

@@ -2062,34 +2062,38 @@ namespace WizWork
             //    }
             //}
             #endregion
-
-            //라벨 스캔
-            //frm_PopUp_PreScanWork_Grid4 FPPSW = new frm_PopUp_PreScanWork_Grid4(processid, machindid, moldid);
-            //FPPSW.StartPosition = FormStartPosition.CenterScreen;
-            //FPPSW.BringToFront();
-            //FPPSW.TopMost = true;
-
-            //if (FPPSW.ShowDialog() == DialogResult.OK)
-            //{
-            //    // ok라는건, 새로운 시작처리가 하나 있다는 것.
-            //    // re_search.
-            //    procQuery();
-            //    WorkingMachine_btnSetting();
-            //    LogData.LogSave(this.GetType().Name, "R"); //2022-06-22 조회
-            //}
-
-            //라벨 선택
-            frm_PopUp_PreScanWork4 FPPSW = new frm_PopUp_PreScanWork4(processid, machindid, moldid);
-            FPPSW.StartPosition = FormStartPosition.CenterScreen;
-            FPPSW.BringToFront();
-            FPPSW.TopMost = true;
-
-            if (FPPSW.ShowDialog() == DialogResult.OK)
+            if (ConvertInt(Frm_tprc_Main.g_tBase.sInstDetSeq) == 1)
             {
-                // ok라는건, 새로운 시작처리가 하나 있다는 것.
-                // re_search.
-                procQuery();
-                WorkingMachine_btnSetting();
+                //라벨 스캔
+                frm_PopUp_PreScanWork_Grid4 FPPSW = new frm_PopUp_PreScanWork_Grid4(processid, machindid, moldid);
+                FPPSW.StartPosition = FormStartPosition.CenterScreen;
+                FPPSW.BringToFront();
+                FPPSW.TopMost = true;
+
+                if (FPPSW.ShowDialog() == DialogResult.OK)
+                {
+                    // ok라는건, 새로운 시작처리가 하나 있다는 것.
+                    // re_search.
+                    procQuery();
+                    WorkingMachine_btnSetting();
+                    LogData.LogSave(this.GetType().Name, "R"); //2022-06-22 조회
+                }
+            }
+            else
+            {
+                //라벨 선택
+                frm_PopUp_PreScanWork4 FPPSW = new frm_PopUp_PreScanWork4(processid, machindid, moldid);
+                FPPSW.StartPosition = FormStartPosition.CenterScreen;
+                FPPSW.BringToFront();
+                FPPSW.TopMost = true;
+
+                if (FPPSW.ShowDialog() == DialogResult.OK)
+                {
+                    // ok라는건, 새로운 시작처리가 하나 있다는 것.
+                    // re_search.
+                    procQuery();
+                    WorkingMachine_btnSetting();
+                }
             }
         }
 

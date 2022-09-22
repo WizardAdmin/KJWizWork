@@ -31,9 +31,9 @@ namespace WizWork
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_tprc_PlanInputMolded_Q));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -76,9 +76,9 @@ namespace WizWork
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.chkProcess = new System.Windows.Forms.CheckBox();
+            this.txtBuyerArticle = new System.Windows.Forms.TextBox();
             this.chkBuyerArticle = new System.Windows.Forms.CheckBox();
             this.cboProcess = new System.Windows.Forms.ComboBox();
-            this.cboBuyerArticle = new System.Windows.Forms.ComboBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.txtPLotID = new System.Windows.Forms.TextBox();
@@ -115,7 +115,7 @@ namespace WizWork
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtBuyerArticle = new System.Windows.Forms.TextBox();
+            this.cboBuyerArticle = new System.Windows.Forms.ComboBox();
             this.pnlForm.SuspendLayout();
             this.tlpForm.SuspendLayout();
             this.pnlRight.SuspendLayout();
@@ -707,6 +707,21 @@ namespace WizWork
             this.chkProcess.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.chkProcess.UseVisualStyleBackColor = false;
             // 
+            // txtBuyerArticle
+            // 
+            this.txtBuyerArticle.BackColor = System.Drawing.Color.White;
+            this.txtBuyerArticle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBuyerArticle.Font = new System.Drawing.Font("맑은 고딕", 18F, System.Drawing.FontStyle.Bold);
+            this.txtBuyerArticle.Location = new System.Drawing.Point(302, 2);
+            this.txtBuyerArticle.Margin = new System.Windows.Forms.Padding(2);
+            this.txtBuyerArticle.Name = "txtBuyerArticle";
+            this.txtBuyerArticle.Size = new System.Drawing.Size(130, 39);
+            this.txtBuyerArticle.TabIndex = 206;
+            this.txtBuyerArticle.Text = "8MG";
+            this.txtBuyerArticle.WordWrap = false;
+            this.txtBuyerArticle.Click += new System.EventHandler(this.txtBuyerArticle_Click);
+            this.txtBuyerArticle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBuyerArticleNo_KeyPress);
+            // 
             // chkBuyerArticle
             // 
             this.chkBuyerArticle.Appearance = System.Windows.Forms.Appearance.Button;
@@ -743,19 +758,6 @@ namespace WizWork
             this.cboProcess.Size = new System.Drawing.Size(144, 38);
             this.cboProcess.TabIndex = 201;
             this.cboProcess.SelectedIndexChanged += new System.EventHandler(this.cboProcess_SelectedIndexChanged);
-            // 
-            // cboBuyerArticle
-            // 
-            this.cboBuyerArticle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboBuyerArticle.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.cboBuyerArticle.FormattingEnabled = true;
-            this.cboBuyerArticle.Location = new System.Drawing.Point(962, 71);
-            this.cboBuyerArticle.Name = "cboBuyerArticle";
-            this.cboBuyerArticle.Size = new System.Drawing.Size(145, 38);
-            this.cboBuyerArticle.TabIndex = 206;
-            this.cboBuyerArticle.Visible = false;
-            this.cboBuyerArticle.DropDown += new System.EventHandler(this.cboBuyerArticle_DropDown);
-            this.cboBuyerArticle.SelectedIndexChanged += new System.EventHandler(this.cboBuyerArticle_SelectedIndexChanged);
             // 
             // panel3
             // 
@@ -833,14 +835,14 @@ namespace WizWork
             this.grdData.AllowUserToAddRows = false;
             this.grdData.AllowUserToResizeRows = false;
             this.grdData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.grdData.ColumnHeadersHeight = 35;
             this.grdData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.grdData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -859,21 +861,21 @@ namespace WizWork
             this.MachineID,
             this.CreateUserID,
             this.SHWorkingYN});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.grdData.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grdData.DefaultCellStyle = dataGridViewCellStyle2;
             this.grdData.Location = new System.Drawing.Point(7, 9);
             this.grdData.MultiSelect = false;
             this.grdData.Name = "grdData";
             this.grdData.ReadOnly = true;
             this.grdData.RowHeadersVisible = false;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("굴림", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.grdData.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("굴림", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.grdData.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.grdData.RowTemplate.Height = 23;
             this.grdData.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.grdData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -1187,20 +1189,18 @@ namespace WizWork
             this.label3.Text = "작  업  진  행    중    현  황";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // txtBuyerArticle
+            // cboBuyerArticle
             // 
-            this.txtBuyerArticle.BackColor = System.Drawing.Color.White;
-            this.txtBuyerArticle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBuyerArticle.Font = new System.Drawing.Font("맑은 고딕", 18F, System.Drawing.FontStyle.Bold);
-            this.txtBuyerArticle.Location = new System.Drawing.Point(302, 2);
-            this.txtBuyerArticle.Margin = new System.Windows.Forms.Padding(2);
-            this.txtBuyerArticle.Name = "txtBuyerArticle";
-            this.txtBuyerArticle.Size = new System.Drawing.Size(130, 39);
-            this.txtBuyerArticle.TabIndex = 206;
-            this.txtBuyerArticle.Text = "8MG";
-            this.txtBuyerArticle.WordWrap = false;
-            this.txtBuyerArticle.Click += new System.EventHandler(this.txtBuyerArticle_Click);
-            this.txtBuyerArticle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBuyerArticleNo_KeyPress);
+            this.cboBuyerArticle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboBuyerArticle.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.cboBuyerArticle.FormattingEnabled = true;
+            this.cboBuyerArticle.Location = new System.Drawing.Point(962, 71);
+            this.cboBuyerArticle.Name = "cboBuyerArticle";
+            this.cboBuyerArticle.Size = new System.Drawing.Size(145, 38);
+            this.cboBuyerArticle.TabIndex = 206;
+            this.cboBuyerArticle.Visible = false;
+            this.cboBuyerArticle.DropDown += new System.EventHandler(this.cboBuyerArticle_DropDown);
+            this.cboBuyerArticle.SelectedIndexChanged += new System.EventHandler(this.cboBuyerArticle_SelectedIndexChanged);
             // 
             // Frm_tprc_PlanInputMolded_Q
             // 

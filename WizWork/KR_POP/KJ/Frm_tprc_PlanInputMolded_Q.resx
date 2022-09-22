@@ -121,30 +121,6 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="chkProcess.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
-        2gAAANoBIhcEeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAE6SURBVFhH7ZZB
-        asJAFIYDUrxGMnoDj+Cua7vsqkvBM2jpQigFkSajV+jGjXfxBu1GEDJjNwXTF3yPmGQME2dGBPPBv0ne
-        y/cjE9VruCs60b4XcPns852Pl65HwMVbEIkDJIH8Qp7wlntYJKcoPs0fW+wfccQdZ+THhGKDY26olB+z
-        xVH7aMgh8QeO2wUPnEJ4GrnuzpM2rtijkVenQp6+k4yLWRDGL95X0sLLWugcOBaJVW+ZPOBKnnJ7/Y/J
-        WO5zMVIt6ZQwlqfA0E9xKcv5ElbkKTD4XVzMp1zCmjwFhofF5XKyElblBCxMVA/KR67hq/NdfS9LbTnB
-        QjFWPbBe9N8eJWYlDOXEZSUsyQm9M0GxLCd0D6YTOVFdwrGcUJe4kpyAP4+vJL/4PTeFfco+FBnU/alu
-        uHE87x8K9B9QGMQQcgAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="chkBuyerArticle.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
-        2gAAANoBIhcEeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAE6SURBVFhH7ZZB
-        asJAFIYDUrxGMnoDj+Cua7vsqkvBM2jpQigFkSajV+jGjXfxBu1GEDJjNwXTF3yPmGQME2dGBPPBv0ne
-        y/cjE9VruCs60b4XcPns852Pl65HwMVbEIkDJIH8Qp7wlntYJKcoPs0fW+wfccQdZ+THhGKDY26olB+z
-        xVH7aMgh8QeO2wUPnEJ4GrnuzpM2rtijkVenQp6+k4yLWRDGL95X0sLLWugcOBaJVW+ZPOBKnnJ7/Y/J
-        WO5zMVIt6ZQwlqfA0E9xKcv5ElbkKTD4XVzMp1zCmjwFhofF5XKyElblBCxMVA/KR67hq/NdfS9LbTnB
-        QjFWPbBe9N8eJWYlDOXEZSUsyQm9M0GxLCd0D6YTOVFdwrGcUJe4kpyAP4+vJL/4PTeFfco+FBnU/alu
-        uHE87x8K9B9QGMQQcgAAAABJRU5ErkJggg==
-</value>
-  </data>
   <data name="chkComplete.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
@@ -170,6 +146,30 @@
 </value>
   </data>
   <data name="chkInsDate.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
+        2gAAANoBIhcEeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAE6SURBVFhH7ZZB
+        asJAFIYDUrxGMnoDj+Cua7vsqkvBM2jpQigFkSajV+jGjXfxBu1GEDJjNwXTF3yPmGQME2dGBPPBv0ne
+        y/cjE9VruCs60b4XcPns852Pl65HwMVbEIkDJIH8Qp7wlntYJKcoPs0fW+wfccQdZ+THhGKDY26olB+z
+        xVH7aMgh8QeO2wUPnEJ4GrnuzpM2rtijkVenQp6+k4yLWRDGL95X0sLLWugcOBaJVW+ZPOBKnnJ7/Y/J
+        WO5zMVIt6ZQwlqfA0E9xKcv5ElbkKTD4XVzMp1zCmjwFhofF5XKyElblBCxMVA/KR67hq/NdfS9LbTnB
+        QjFWPbBe9N8eJWYlDOXEZSUsyQm9M0GxLCd0D6YTOVFdwrGcUJe4kpyAP4+vJL/4PTeFfco+FBnU/alu
+        uHE87x8K9B9QGMQQcgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="chkProcess.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
+        2gAAANoBIhcEeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAE6SURBVFhH7ZZB
+        asJAFIYDUrxGMnoDj+Cua7vsqkvBM2jpQigFkSajV+jGjXfxBu1GEDJjNwXTF3yPmGQME2dGBPPBv0ne
+        y/cjE9VruCs60b4XcPns852Pl65HwMVbEIkDJIH8Qp7wlntYJKcoPs0fW+wfccQdZ+THhGKDY26olB+z
+        xVH7aMgh8QeO2wUPnEJ4GrnuzpM2rtijkVenQp6+k4yLWRDGL95X0sLLWugcOBaJVW+ZPOBKnnJ7/Y/J
+        WO5zMVIt6ZQwlqfA0E9xKcv5ElbkKTD4XVzMp1zCmjwFhofF5XKyElblBCxMVA/KR67hq/NdfS9LbTnB
+        QjFWPbBe9N8eJWYlDOXEZSUsyQm9M0GxLCd0D6YTOVFdwrGcUJe4kpyAP4+vJL/4PTeFfco+FBnU/alu
+        uHE87x8K9B9QGMQQcgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="chkBuyerArticle.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
         2gAAANoBIhcEeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAE6SURBVFhH7ZZB

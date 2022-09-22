@@ -1377,7 +1377,7 @@ namespace WizWork
                     //}
                     #endregion
 
-                    bool PopUp_HeaderMessage = true;
+                    bool PopUp_HeaderMessage = false; // true 라벨 발행 안 함 2022-09-14
 
                     //if (Wh_Ar_LabelPrintYN == "N")
                     //{
@@ -2385,21 +2385,21 @@ namespace WizWork
                 {
                     LogData.LogSave(this.GetType().Name, "C"); //2022-06-22 저장
                     //첫 공정(DETSEQ가 1)   && MT_ARTICLE  LABELPRINTYN = Y && 1개 이상의 박스당 생산수
-                    if ((LabelPrintYN == "Y") && (Wh_Ar_LabelPrintYN == "Y") && (LabelPaper_Count > 0) && (InstDetSeq == 1))
+                    if ((LabelPrintYN == "Y") && (Wh_Ar_LabelPrintYN == "Y") && (LabelPaper_Count > 0) && (InstDetSeq == 1) && (Split_GBN == "YC"))
                     {
                         if ((Split_GBN == "YC" && LabelPaper_OneMoreQty > 0))
                         {
-                            //PrintWorkCard((int)LabelPaper_Count + 1);
-                            Message[0] = "[저장 완료]";
-                            Message[1] = "저장이 완료되었습니다.";
-                            WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
+                            PrintWorkCard((int)LabelPaper_Count + 1);
+                            //Message[0] = "[저장 완료]";
+                            //Message[1] = "저장이 완료되었습니다.";
+                            //WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
                         }
                         else
                         {
-                            //PrintWorkCard((int)LabelPaper_Count);
-                            Message[0] = "[저장 완료]";
-                            Message[1] = "저장이 완료되었습니다.";
-                            WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
+                            PrintWorkCard((int)LabelPaper_Count);
+                            //Message[0] = "[저장 완료]";
+                            //Message[1] = "저장이 완료되었습니다.";
+                            //WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
                         }
                         //LogData.LogSave(this.GetType().Name, "P"); //2022-06-22 인쇄, 재발행
                     }

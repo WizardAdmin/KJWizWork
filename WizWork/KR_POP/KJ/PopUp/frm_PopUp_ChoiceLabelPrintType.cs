@@ -157,8 +157,64 @@ namespace WizWork
             }
             else
             {
+                #region 주석
                 // 각 세 버튼에 대한 TEXT 를 정해야 하기 때문에ㅡ.,
                 // 가져온 AllQty랑, StandardQty로 몫이랑 나머지 값을 구하자.
+
+                //if (D_AllQty > D_StandardQty)
+                //{
+                //    double C = D_AllQty / D_StandardQty;
+                //    double QuoQty = System.Math.Truncate(C);        // 몫
+                //    double RemainQty = D_AllQty % D_StandardQty;    // 나머지
+
+                //    D_QuoQty = QuoQty;
+                //    D_RemainQty = RemainQty;
+
+
+                //    btnNC.Text = D_AllQty.ToString() + "EA로 인쇄된 \r\n" +
+                //        "라벨 1장이 나옵니다";
+                //    btnYO.Text = D_StandardQty.ToString() + "EA로 인쇄된 \r\n" +
+                //        "라벨 " + QuoQty.ToString() + "장이 나옵니다";
+
+                //    if (RemainQty == 0)
+                //    {
+                //        btnYC.Text = D_StandardQty.ToString() + "EA로 인쇄된 \r\n" +
+                //        "라벨 " + QuoQty.ToString() + "장이 나옵니다";
+                //    }
+                //    else
+                //    {
+                //        btnYC.Text = D_StandardQty.ToString() + "EA, " + RemainQty.ToString() + "EA로 인쇄된 \r\n" +
+                //        "라벨 " + (QuoQty + 1).ToString() + "장이 나옵니다";
+                //    }
+                //}
+                //else if (D_AllQty == D_StandardQty)
+                //{
+                //    btnNC.Text = D_AllQty.ToString() + "EA로 인쇄된 \r\n" +
+                //        "라벨 1장이 나옵니다";
+                //    btnYO.Text = D_AllQty.ToString() + "EA로 인쇄된 \r\n" +
+                //        "라벨 1장이 나옵니다";
+                //    btnYC.Text = D_AllQty.ToString() + "EA로 인쇄된 \r\n" +
+                //        "라벨 1장이 나옵니다";
+                //}
+                //else if (D_AllQty < D_StandardQty)
+                //{
+                //    btnNC.Text = D_AllQty.ToString() + "EA로 인쇄된 \r\n" +
+                //        "라벨 1장이 나옵니다";
+                //    btnYO.Text = D_AllQty.ToString() + "EA로 실적등록, \r\n" +
+                //        "라벨은 발행되지 않습니다";
+                //    btnYC.Text = D_AllQty.ToString() + "EA로 인쇄된 \r\n" +
+                //        "라벨 1장이 나옵니다";
+                //}
+                #endregion
+
+                // 각 세 버튼에 대한 TEXT 를 정해야 하기 때문에ㅡ.,
+                // 가져온 AllQty랑, StandardQty로 몫이랑 나머지 값을 구하자.
+
+                btnNC.Text = D_AllQty.ToString() + "EA로 인쇄된 \r\n" +
+                    "라벨 1장이 나옵니다";
+
+                //btnYO.Text = D_StandardQty.ToString() + "EA로 인쇄된 \r\n" +
+                //        "라벨 " + QuoQty.ToString() + "장이 나옵니다";
 
                 if (D_AllQty > D_StandardQty)
                 {
@@ -170,10 +226,16 @@ namespace WizWork
                     D_RemainQty = RemainQty;
 
 
-                    btnNC.Text = D_AllQty.ToString() + "EA로 인쇄된 \r\n" +
-                        "라벨 1장이 나옵니다";
-                    btnYO.Text = D_StandardQty.ToString() + "EA로 인쇄된 \r\n" +
-                        "라벨 " + QuoQty.ToString() + "장이 나옵니다";
+                    if (RemainQty == 0)
+                    {
+                        btnYO.Text = D_StandardQty.ToString() + "EA로 실적등록 \r\n" +
+                        "라벨은 발행되지 않습니다";
+                    }
+                    else
+                    {
+                        btnYO.Text = D_StandardQty.ToString() + "EA, " + RemainQty.ToString() + "EA로 실적등록 \r\n" +
+                        "라벨은 발행되지 않습니다";
+                    }
 
                     if (RemainQty == 0)
                     {
@@ -185,25 +247,24 @@ namespace WizWork
                         btnYC.Text = D_StandardQty.ToString() + "EA, " + RemainQty.ToString() + "EA로 인쇄된 \r\n" +
                         "라벨 " + (QuoQty + 1).ToString() + "장이 나옵니다";
                     }
+
                 }
                 else if (D_AllQty == D_StandardQty)
                 {
-                    btnNC.Text = D_AllQty.ToString() + "EA로 인쇄된 \r\n" +
-                        "라벨 1장이 나옵니다";
-                    btnYO.Text = D_AllQty.ToString() + "EA로 인쇄된 \r\n" +
-                        "라벨 1장이 나옵니다";
+                    btnYO.Text = D_AllQty.ToString() + "EA로 실적등록 \r\n" +
+                        "라벨은 발행되지 않습니다";
                     btnYC.Text = D_AllQty.ToString() + "EA로 인쇄된 \r\n" +
                         "라벨 1장이 나옵니다";
                 }
                 else if (D_AllQty < D_StandardQty)
                 {
-                    btnNC.Text = D_AllQty.ToString() + "EA로 인쇄된 \r\n" +
-                        "라벨 1장이 나옵니다";
                     btnYO.Text = D_AllQty.ToString() + "EA로 실적등록, \r\n" +
                         "라벨은 발행되지 않습니다";
                     btnYC.Text = D_AllQty.ToString() + "EA로 인쇄된 \r\n" +
                         "라벨 1장이 나옵니다";
                 }
+
+
             }
 
         }
