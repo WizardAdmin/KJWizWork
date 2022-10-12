@@ -184,7 +184,7 @@ namespace WizWork
                         string y = "";
                         foreach (DataRow dr in dt.Rows)
                         {
-                            if (dgdMain.Rows.Count == 0 || dr["ArticleID"].ToString() != dgdMain.Rows[0].Cells["ArticleID"].Value.ToString()) //2022-05-17 하위품이 여러개인 경우 선입선출로 처리하여 가장 먼저 생산된 라벨이 나타나게 함
+                            if (dgdMain.Rows.Count == 0) //2022-05-17 하위품이 여러개인 경우 선입선출로 처리하여 가장 먼저 생산된 라벨이 나타나게 함
                             {
                                 dgdMain.Rows.Add(++i,
                                                          Lib.CheckNull(dr["ArticleID"].ToString()),
