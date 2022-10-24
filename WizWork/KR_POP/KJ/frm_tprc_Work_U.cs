@@ -92,7 +92,6 @@ namespace WizWork
         public List<Sub_TWkResult> list_TWkResult = new List<Sub_TWkResult>();
         public List<Sub_TWkLabelPrint> list_TWkLabelPrint = new List<Sub_TWkLabelPrint>();
         public List<Sub_TWkResult_SplitAdd> list_TWkResult_SplitAdd = new List<Sub_TWkResult_SplitAdd>();
-
         public List<Sub_TMold> list_TMold = null;
 
         List<string> lData = null;
@@ -265,34 +264,6 @@ namespace WizWork
         }
 
         #endregion
-
-
-        private void InitgrdWDcar()
-        {
-            int i = 0;
-            //grdWDcar.Columns.Clear();
-            
-            foreach (DataGridViewColumn col in GridData1.Columns)
-            {
-                col.DataPropertyName = col.Name;
-                col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                col.SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
-            return;
-        }
-
-        private void FillGridwdcard()
-        {
-            //xp_work_sWDcar
-            int i = 0;
-            DataSet ds = null;
-            ds = DataStore.Instance.ProcedureToDataSet("xp_work_sWDcar", null, false);
-            if (ds.Tables[0].Rows.Count > 0)
-            {
-                
-            }
-
-        }
 
         private void cmdExit_Click(object sender, EventArgs e)
         {
@@ -1057,173 +1028,154 @@ namespace WizWork
         }
         #endregion
 
-
-        //2021-12-02 포장 팝업창에서 데이터 가져오기
-        private void DataRecevieEvent(int txtinspectqty, int txtpassqty, int txtdefectqty, int txtRemainQty, int txtqtyperbox, int txtBoxQty)
-        {
-            InspectQty = txtinspectqty; //2021-11-22 검사수량(생산수량 - 생산불량수량)
-            PassQty = txtpassqty;       //2021-11-22 합격수량(검사수량 - 검사의 불량수량)
-            DefectQty = txtdefectqty;   //2021-11-22 검사의 불량수량(Inspect)
-            RemainQty = txtRemainQty;   //2021-11-22 잔량
-            QtyperBox = txtqtyperbox;   //2021-11-22 박스당 수량
-            BoxQty = txtBoxQty;         //2021-11-22 박스 수량     
-        }
-
-
         private void cmdSave_Click(object sender, EventArgs e)
-        {
-            //Frm_PopUp_Packing pack = new Frm_PopUp_Packing((Lib.ConvertInt(txtWorkQty.Text) - Lib.ConvertInt(txtDefectQty.Text)).ToString(), txtArticleID.Text.ToString());
-            //pack.DataPassEvent += new Frm_PopUp_Packing.DataPassEventHandler(DataRecevieEvent); //2021-11-22 포장 팝업창에서 데이터 가져오기
-            //pack.ShowDialog();
-            //if (pack.DialogResult == DialogResult.OK)
+        {            
+            // 오늘 자주검사, 공정검사 했는 지 체크, 안 했으면 비밀번호 입력해서 넘기거나 막기
+            if (Ins_Inspect() == false) 
+            {
+                return;
+            }
+
+            // 해당 작업 건이 이미 등록된 건이 아닌지 체크하기
+            if (CheckAlreadyWorkIn() == false)
+            {
+                Frm_tprc_Main.list_g_tsplit.Clear();
+                this.Close();
+                return;
+            }
+
+            //해당 작업 건을 취소를 했는 지 안했는 지 체크하기 2021-08-20
+            if (CheckAlreadyWorkOut() == false)
+            {
+                Frm_tprc_Main.list_g_tsplit.Clear();
+                this.Close();
+                return;
+            }
+
+            //날짜를 오늘 기준으로 하루 전으로만 변경이 되게 여기서 체크 2021-08-20 
+            //if (CheckToday() == false)
             //{
-                
-                // 오늘 자주검사, 공정검사 했는 지 체크, 안 했으면 비밀번호 입력해서 넘기거나 막기
-                if (Ins_Inspect() == false) 
+            //    return;
+            //}
+
+            //시작 시간과 종료 시간을 비교하여 같으면 저장 안되게 여기서 체크 2021-08-20 
+            if (CheckTime() == false)
+            {
+                return;
+            }
+
+            //2022-06-09
+            ProcessMtrExceptYN();
+
+            //2022-06-09
+            //if (m_MtrExceptYN != "Y")
+            if((m_MtrExceptYN.Equals("N") && m_PCMtrExceptYN.Equals("")) || m_PCMtrExceptYN.Equals("N"))
+            {
+                //2022-06-02 하나의 라벨로 동시에 여러 작업을 할 경우에 라벨 재고 확인
+                for (int i = 0; i < lstLabelQtyList.Count; i++)
                 {
-                    return;
+                    if (CheckLOTIDQty(lstLabelQtyList[i], lstLOTIDQtyList[i]) == false)
+                    {
+                        lstLOTIDQtyList.Clear();
+                        lstLabelQtyList.Clear();
+                        Frm_tprc_Main.list_g_tsplit.Clear();
+                        this.Close();
+                        return;
+                    }
                 }
+            }
 
-                // 해당 작업 건이 이미 등록된 건이 아닌지 체크하기
-                if (CheckAlreadyWorkIn() == false)
-                {
-                    Frm_tprc_Main.list_g_tsplit.Clear();
-                    this.Close();
-                    return;
-                }
 
-                //해당 작업 건을 취소를 했는 지 안했는 지 체크하기 2021-08-20
-                if (CheckAlreadyWorkOut() == false)
-                {
-                    Frm_tprc_Main.list_g_tsplit.Clear();
-                    this.Close();
-                    return;
-                }
+            // 2021-05-06 퇴사하기전에 남겨놓은 작업이 있는 경우를 때문에 작업자가 퇴사,근속 확인 후에 넘어가도록 추가, 
+            // 똑같은 사람이 여러번 입사와 퇴사를 할수 있어 PersonID로 구분
+            string Person = "";
+            string[] PersonResign = new string[2];
+            string sql = "select EndDate from mt_Person where Name = '" + txtNowWorker.Text + "' and PersonID = '"+ Frm_tprc_Main.g_tBase.PersonID + "'";
+            PersonResign = DataStore.Instance.ExecuteQuery(sql, false);
+            Person = PersonResign[1];
 
-                //날짜를 오늘 기준으로 하루 전으로만 변경이 되게 여기서 체크 2021-08-20 
-                //if (CheckToday() == false)
-                //{
-                //    return;
-                //}
+            if (Person != null && Person != "")
+            {
+                WizCommon.Popup.MyMessageBox.ShowBox("작업자 : " + txtNowWorker.Text + ", 퇴사자 입니다. 작업취소 후 작업자를 다시 선택해 주세요", "[저장 전 오류]", 0, 1);
+                return;
+            }            
+            m_MindouProdCapa = double.Parse(String.Format("{0:n0}", m_MindouProdCapa)); //2021-04-09 소수점 버림으로써 생산가능량에서 소수점버린 것과 같이 비교하기 위해 여기서도 소수점 버린것으로 비교
+                                                                                //2021-12-01 생산가능량을 하위품이 여러개인 경우 최소값을 가져가게 수정함 m_douProdCapa -> m_MindouProdCapa
+            if (m_MindouProdCapa != 0 || m_MindouProdCapa == 0)   // 생산가능량 : m_douProdCapa 
+            {
 
-                //시작 시간과 종료 시간을 비교하여 같으면 저장 안되게 여기서 체크 2021-08-20 
-                if (CheckTime() == false)
-                {
-                    return;
-                }
+            #region 주석 잔량이동처리 사용안함 2021-07-27
+            // 최소한, 생산가능량이 머라도 떴을 때, 이게 0이라는건 애초에 문제가 많고. +
+            // 0이면 prescan 라인에서 막혀야 하니까.
+            //2021-07-27 잔량이동처리를 사용하지 않아 주석처리 함
+            //if (Lib.GetDouble(txtWorkQty.Text) > m_douProdCapa
+            //    && ConvertInt(Frm_tprc_Main.g_tBase.sInstDetSeq) == 1)
+            //{
+            //for (int i = 0; i < GridData2.Rows.Count; i++)
+            //{
+            //    double CapaQty = ConvertDouble(GridData2.Rows[i].Cells["ProdCapa"].Value.ToString());
+            //    double RemainQty = ConvertDouble(GridData2.Rows[i].Cells["RemainQty"].Value.ToString());
+            //    double ReqQty = ConvertDouble(GridData2.Rows[i].Cells["ReqQty"].Value.ToString());
 
+            //    double TotalCapaQty = RemainQty * ReqQty;
+
+            //    if (ConvertDouble(txtWorkQty.Text) > TotalCapaQty && (TotalCapaQty.ToString().Contains("-") == false || TotalCapaQty != 0)) //2021-04-08 전체 재고량이 마이너스가 아니고 0이 아닐 경우에만 비교함
+            //    {
+            //        WizCommon.Popup.MyMessageBox.ShowBox("총 생산 가능량 : " + stringFormatN0(TotalCapaQty) + "\r\n 작업 수량을 전체 재고량 이하로 설정해주세요.", "[저장 전 오류]", 0, 1);
+            //        return;
+            //    }
+
+            //    Message[0] = "[하위품 생산가능량 부족]";
+            //    Message[1] = "하위품(해당 투입 라벨)의 생산가능량이 부족합니다.\r\n(최대 생산 가능량 : " + CapaQty + " )\r\n자동 잔량이동처리를 하시겠습니까?";
+            //    if (WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 0, 0) == DialogResult.OK)
+            //    {
+            //        if (SaveMoveFromTo(ConvertDouble(updateJobID), ConvertDouble(txtWorkQty.Text)))
+            //        {
+            //            FillGridData2(Frm_tprc_Main.g_tBase.sInstID, Frm_tprc_Main.g_tBase.ProcessID);
+            //            //2021-04-06 잔량 불러오기 후 LOT이동처리를 위해 추가
+            //            if (m_LabelID != (m_StartSaveLabelID == "" ? m_LabelID : m_StartSaveLabelID))
+            //            {
+            //                LotMoveBarcodeEnter();
+            //            }
+            //            else
+            //            {
+            //                BarcodeEnter();
+            //            }
+            //        }
+            //        else
+            //        {
+            //            return;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        return;
+            //    }
+            //}
+            //}
+            //else 
+            //if (ConvertInt(Frm_tprc_Main.g_tBase.sInstDetSeq) != 1
+            //    && Lib.GetDouble(txtWorkQty.Text) > m_douProdCapa)
+            #endregion
+                    
                 //2022-06-09
-                ProcessMtrExceptYN();
-
-                //2022-06-09
+                //(m_MtrExceptYN.Equals("N") && m_PCMtrExceptYN.Equals("")) || m_PCMtrExceptYN.Equals("N")
                 //if (m_MtrExceptYN != "Y")
                 if((m_MtrExceptYN.Equals("N") && m_PCMtrExceptYN.Equals("")) || m_PCMtrExceptYN.Equals("N"))
                 {
-                    //2022-06-02 하나의 라벨로 동시에 여러 작업을 할 경우에 라벨 재고 확인
-                    for (int i = 0; i < lstLabelQtyList.Count; i++)
+                    if (Lib.GetDouble(txtWorkQty.Text) > m_MindouProdCapa)
                     {
-                        if (CheckLOTIDQty(lstLabelQtyList[i], lstLOTIDQtyList[i]) == false)
-                        {
-                            lstLOTIDQtyList.Clear();
-                            lstLabelQtyList.Clear();
-                            Frm_tprc_Main.list_g_tsplit.Clear();
-                            this.Close();
-                            return;
-                        }
+                        // 내 순수 작업물량이 생산가능량 보다 크다면, 막아야 한다.
+                        Message[0] = "[작업수량]";
+                        Message[1] = "작업수량이 생산가능 수량보다 더 큽니다." +
+                                        "생산실적 저장을 중단합니다.";
+                        WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
+                        return;
                     }
                 }
+            }
 
-
-                // 2021-05-06 퇴사하기전에 남겨놓은 작업이 있는 경우를 때문에 작업자가 퇴사,근속 확인 후에 넘어가도록 추가, 
-                // 똑같은 사람이 여러번 입사와 퇴사를 할수 있어 PersonID로 구분
-                string Person = "";
-                string[] PersonResign = new string[2];
-                string sql = "select EndDate from mt_Person where Name = '" + txtNowWorker.Text + "' and PersonID = '"+ Frm_tprc_Main.g_tBase.PersonID + "'";
-                PersonResign = DataStore.Instance.ExecuteQuery(sql, false);
-                Person = PersonResign[1];
-
-                if (Person != null && Person != "")
-                {
-                    WizCommon.Popup.MyMessageBox.ShowBox("작업자 : " + txtNowWorker.Text + ", 퇴사자 입니다. 작업취소 후 작업자를 다시 선택해 주세요", "[저장 전 오류]", 0, 1);
-                    return;
-                }            
-                m_MindouProdCapa = double.Parse(String.Format("{0:n0}", m_MindouProdCapa)); //2021-04-09 소수점 버림으로써 생산가능량에서 소수점버린 것과 같이 비교하기 위해 여기서도 소수점 버린것으로 비교
-                                                                                  //2021-12-01 생산가능량을 하위품이 여러개인 경우 최소값을 가져가게 수정함 m_douProdCapa -> m_MindouProdCapa
-                if (m_MindouProdCapa != 0 || m_MindouProdCapa == 0)   // 생산가능량 : m_douProdCapa 
-                {
-
-                #region 주석 잔량이동처리 사용안함 2021-07-27
-                // 최소한, 생산가능량이 머라도 떴을 때, 이게 0이라는건 애초에 문제가 많고. +
-                // 0이면 prescan 라인에서 막혀야 하니까.
-                //2021-07-27 잔량이동처리를 사용하지 않아 주석처리 함
-                //if (Lib.GetDouble(txtWorkQty.Text) > m_douProdCapa
-                //    && ConvertInt(Frm_tprc_Main.g_tBase.sInstDetSeq) == 1)
-                //{
-                //for (int i = 0; i < GridData2.Rows.Count; i++)
-                //{
-                //    double CapaQty = ConvertDouble(GridData2.Rows[i].Cells["ProdCapa"].Value.ToString());
-                //    double RemainQty = ConvertDouble(GridData2.Rows[i].Cells["RemainQty"].Value.ToString());
-                //    double ReqQty = ConvertDouble(GridData2.Rows[i].Cells["ReqQty"].Value.ToString());
-
-                //    double TotalCapaQty = RemainQty * ReqQty;
-
-                //    if (ConvertDouble(txtWorkQty.Text) > TotalCapaQty && (TotalCapaQty.ToString().Contains("-") == false || TotalCapaQty != 0)) //2021-04-08 전체 재고량이 마이너스가 아니고 0이 아닐 경우에만 비교함
-                //    {
-                //        WizCommon.Popup.MyMessageBox.ShowBox("총 생산 가능량 : " + stringFormatN0(TotalCapaQty) + "\r\n 작업 수량을 전체 재고량 이하로 설정해주세요.", "[저장 전 오류]", 0, 1);
-                //        return;
-                //    }
-
-                //    Message[0] = "[하위품 생산가능량 부족]";
-                //    Message[1] = "하위품(해당 투입 라벨)의 생산가능량이 부족합니다.\r\n(최대 생산 가능량 : " + CapaQty + " )\r\n자동 잔량이동처리를 하시겠습니까?";
-                //    if (WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 0, 0) == DialogResult.OK)
-                //    {
-                //        if (SaveMoveFromTo(ConvertDouble(updateJobID), ConvertDouble(txtWorkQty.Text)))
-                //        {
-                //            FillGridData2(Frm_tprc_Main.g_tBase.sInstID, Frm_tprc_Main.g_tBase.ProcessID);
-                //            //2021-04-06 잔량 불러오기 후 LOT이동처리를 위해 추가
-                //            if (m_LabelID != (m_StartSaveLabelID == "" ? m_LabelID : m_StartSaveLabelID))
-                //            {
-                //                LotMoveBarcodeEnter();
-                //            }
-                //            else
-                //            {
-                //                BarcodeEnter();
-                //            }
-                //        }
-                //        else
-                //        {
-                //            return;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        return;
-                //    }
-                //}
-                //}
-                //else 
-                //if (ConvertInt(Frm_tprc_Main.g_tBase.sInstDetSeq) != 1
-                //    && Lib.GetDouble(txtWorkQty.Text) > m_douProdCapa)
-                #endregion
-                    
-                    //2022-06-09
-                    //(m_MtrExceptYN.Equals("N") && m_PCMtrExceptYN.Equals("")) || m_PCMtrExceptYN.Equals("N")
-                    //if (m_MtrExceptYN != "Y")
-                    if((m_MtrExceptYN.Equals("N") && m_PCMtrExceptYN.Equals("")) || m_PCMtrExceptYN.Equals("N"))
-                    {
-                        if (Lib.GetDouble(txtWorkQty.Text) > m_MindouProdCapa)
-                        {
-                            // 내 순수 작업물량이 생산가능량 보다 크다면, 막아야 한다.
-                            Message[0] = "[작업수량]";
-                            Message[1] = "작업수량이 생산가능 수량보다 더 큽니다." +
-                                            "생산실적 저장을 중단합니다.";
-                            WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
-                            return;
-                        }
-                    }
-                }
-
-                #region 주석
+            #region 주석
             // 투입 라벨 생산가능량 교차 검증 2021-11-30 일단 주석 처리
             //if (CheckProdCapa(ConvertDouble(txtWorkQty.Text)) == false)
             //{
@@ -1232,265 +1184,264 @@ namespace WizWork
             //}
             #endregion
 
-                bool SaveStart_OK = true;
-                double LabelPaper_Qty = 0;              // 라벨에 찍혀나올 qty 값.
-                double LabelPaper_Count = 0;            // 라벨 발행 부수.
-                double LabelPaper_OneMoreQty = 0;       // 한장 더 이 수만큼 뽑거나  / or / 이 수만큼 split에 담아두거나.
-                string Split_GBN = string.Empty;
+            bool SaveStart_OK = true;
+            double LabelPaper_Qty = 0;              // 라벨에 찍혀나올 qty 값.
+            double LabelPaper_Count = 0;            // 라벨 발행 부수.
+            double LabelPaper_OneMoreQty = 0;       // 한장 더 이 수만큼 뽑거나  / or / 이 수만큼 split에 담아두거나.
+            string Split_GBN = string.Empty;
 
-                if (Frm_tprc_Main.g_tBase.sInstDetSeq == "1")
+            if (Frm_tprc_Main.g_tBase.sInstDetSeq == "1")
+            {
+                SaveStart_OK = false;
+
+
+                string AllQty = txtWorkQty.Text.ToString(); //2021-11-22 txtTotalLabelQty.Text -> InspectQty로 수정, 포장 팝업 창의 합격수량  
+                string StandardQty = txtLotProdQty.Text.ToString(); //2021-11-22 txtLotProdQty.Text -> QtyperBox로 수정, 포장 팝업 창의 박스당수량으로 계산하기 위해  
+                string BringRemainQty = txtRemainAdd.Text;
+                string MyQty = txtWorkQty.Text.ToString();  //2021-11-22 txtWorkQty.Text -> PassQty로 수정 , 포장 팝업 창의 합격수량으로 계산하기 위해 
+
+                #region 주석
+                //string AllQty = txtTotalLabelQty.Text;
+                //string StandardQty = txtLotProdQty.Text;
+                //string BringRemainQty = txtRemainAdd.Text;
+                //string MyQty = txtWorkQty.Text;
+                #endregion
+
+                double d_AllQty = 0;
+                double d_StandardQty = 0;
+                double d_BringRemainQty = 0;
+                double d_MyQty = 0;
+
+
+
+                Double.TryParse(AllQty, out d_AllQty);
+                Double.TryParse(StandardQty, out d_StandardQty);
+                Double.TryParse(BringRemainQty, out d_BringRemainQty);
+                Double.TryParse(MyQty, out d_MyQty);
+
+                double d_DefectQty = ConvertDouble(txtDefectQty.Text); //생산불량 
+                //double i_DefectQty = ConvertDouble(DefectQty.ToString()); //검사포장불량
+                // d
+
+                if (d_AllQty == 0)
                 {
-                    SaveStart_OK = false;
-
-
-                    string AllQty = txtWorkQty.Text.ToString(); //2021-11-22 txtTotalLabelQty.Text -> InspectQty로 수정, 포장 팝업 창의 합격수량  
-                    string StandardQty = txtLotProdQty.Text.ToString(); //2021-11-22 txtLotProdQty.Text -> QtyperBox로 수정, 포장 팝업 창의 박스당수량으로 계산하기 위해  
-                    string BringRemainQty = txtRemainAdd.Text;
-                    string MyQty = txtWorkQty.Text.ToString();  //2021-11-22 txtWorkQty.Text -> PassQty로 수정 , 포장 팝업 창의 합격수량으로 계산하기 위해 
-
-                    #region 주석
-                    //string AllQty = txtTotalLabelQty.Text;
-                    //string StandardQty = txtLotProdQty.Text;
-                    //string BringRemainQty = txtRemainAdd.Text;
-                    //string MyQty = txtWorkQty.Text;
-                    #endregion
-
-                    double d_AllQty = 0;
-                    double d_StandardQty = 0;
-                    double d_BringRemainQty = 0;
-                    double d_MyQty = 0;
-
-
-
-                    Double.TryParse(AllQty, out d_AllQty);
-                    Double.TryParse(StandardQty, out d_StandardQty);
-                    Double.TryParse(BringRemainQty, out d_BringRemainQty);
-                    Double.TryParse(MyQty, out d_MyQty);
-
-                    double d_DefectQty = ConvertDouble(txtDefectQty.Text); //생산불량 
-                    //double i_DefectQty = ConvertDouble(DefectQty.ToString()); //검사포장불량
-                    // d
-
-                    if (d_AllQty == 0)
-                    {
-                        Message[0] = "[작업수량]";
-                        Message[1] = "작업수량이 입력되지 않았습니다. \r\n" +
-                                        "라벨발행을 중단합니다.";
-                        WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
-                        return;
-                    }
-                    if (d_AllQty < d_DefectQty)
-                    {
-                        Message[0] = "[작업수량]";
-                        Message[1] = "작업수량(" + d_AllQty + ")이 불량수량(" + d_DefectQty + ")보다 작습니다. \r\n" +
-                                        "라벨발행을 중단합니다.";
-                        WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
-                        return;
-                    }
-                    if (d_AllQty - d_DefectQty == 0)
-                    {
-                        Message[0] = "[작업수량]";
-                        Message[1] = "불량(" + d_DefectQty + ")을 제외한 작업 수량(" + d_AllQty + ")이 0개 입니다. \r\n" +
-                                        "라벨발행을 중단합니다.";
-                        WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
-                        return;
-                    }
-                    else if (d_StandardQty == 0)
-                    {
-                        Message[0] = "[기준수량]";
-                        Message[1] = "생산박스 당 수량이 입력되지 않았습니다. \r\n" +
+                    Message[0] = "[작업수량]";
+                    Message[1] = "작업수량이 입력되지 않았습니다. \r\n" +
                                     "라벨발행을 중단합니다.";
-                        WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
-                        return;
-                    }
-
-                    #region 주석
-                    ////2021-10-15 무조건 통과 되는 거 같아 주석 처리함 (검토 필요)
-                    //if (!CheckIsSameWorkTime())
-                    //{
-                    //    return;
-                    //}
-                    
-
-                    // 가져온 잔량이 있는 상태에서,
-                    //if (Frm_tprc_Main.list_g_tsplit.Count > 0)
-                    //{
-
-                    //int TotalQty = ConvertInt(txtTotalLabelQty.Text);
-                    //int BoxQty = ConvertInt(txtLotProdQty.Text);
-                    //int DefectQty = ConvertInt(txtDefectQty.Text);
-                    //TotalQty = TotalQty - DefectQty;
-
-                    
-                    //int value = ((int)d_StandardQty * Frm_tprc_Main.list_g_tsplit.Count) - (int)d_BringRemainQty;
-                    //if (value > (int)d_MyQty)
-                    //{
-                    //    Message[0] = "[박스수량 문제]";
-                    //    Message[1] = "최소 " + value.ToString() + "개 이상은 작업해야 박스수량을 맞출 수 있습니다. \r\n" +
-                    //        "라벨발행을 중단합니다.";
-                    //    WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
-                    //    return;
-                    //}
-
-
-
-                    //int result = 0;
-
-                    //if (TotalQty < BoxQty)
-                    //{
-                    //    result = BoxQty - TotalQty;
-                    //}
-                    //else if (TotalQty > BoxQty)
-                    //{
-                    //    result = BoxQty == 0 ? 0 : TotalQty % BoxQty;
-
-                    //    if (result != 0)
-                    //    {
-                    //        result = BoxQty - result;
-                    //    }
-                    //}
-
-
-                    // ↓ 2020.10.19 GLS 한박스가 안되더라고 바코드 출력과 함께 작업 완료 되도록 요청
-                    //if (TotalQty < BoxQty)
-                    //{
-                    //    int result = 0;
-                    //    result = BoxQty - TotalQty;
-
-                    //    Message[0] = "[박스수량 문제]";
-                    //    if (DefectQty > 0)
-                    //    {
-                    //        Message[1] = "등록된 불량 " + d_DefectQty + "개를 제외하고 최소 " + result.ToString() + "개 이상 \r\n더 작업해야 합니다.";       
-                    //    }
-                    //    else
-                    //    {
-                    //        Message[1] = "최소 " + result.ToString() + "개 이상 작업해야합니다.";
-                    //    }
-
-                    //    Message[1] += "\r\n(잔량 불러오기 기능을 사용하는 경우,\r\n  최소 한 박스 이상 작업을 해야 합니다.)";
-
-                    //    WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
-                    //    return;
-                    //}
-                    
-
-                    //}
-                    #endregion
-
-                    bool PopUp_HeaderMessage = false; // true 라벨 발행 안 함 2022-09-14
-
-                    //if (Wh_Ar_LabelPrintYN == "N")
-                    //{
-                    // PopUp_HeaderMessage = true;
-                    //}
-                    //else { PopUp_HeaderMessage = false; }
-
-                    // 첫 공정으로서 > 전표발행을 담당하는 공정이라면,
-                    // 라벨발행 유형 타입을 설정합니다.
-                    frm_PopUp_ChoiceLabelPrintType ChoiceType = new frm_PopUp_ChoiceLabelPrintType(d_AllQty - d_DefectQty, d_StandardQty, PopUp_HeaderMessage);
-                    //frm_PopUp_ChoiceLabelPrintType ChoiceType = new frm_PopUp_ChoiceLabelPrintType(d_AllQty - i_DefectQty, d_StandardQty, PopUp_HeaderMessage);
-                    ChoiceType.Owner = this;
-                    ChoiceType.WriteTextEvent += ChoiceType_WriteTextEvent;
-                    ChoiceType.ShowDialog();
-
-                    void ChoiceType_WriteTextEvent(string Message, double Qty, double PrintCount, double RemainOneMoreQty)
-                    {
-                        if (Message == "Cancel")
-                        { 
-                            return; 
-                        }
-                        else
-                        {
-                            Split_GBN = Message;
-                            LabelPaper_Qty = Qty;
-                            LabelPaper_Count = PrintCount;
-                            LabelPaper_OneMoreQty = RemainOneMoreQty;
-                            SaveStart_OK = true;
-                        }
-                    }
-                }
-                //2021-09-24 첫공정만 확인 하지 않고 전 공정에서 확인 하기 위해 추가
-                else
-                {
-
-                    #region 주석
-                    //string AllQty = txtTotalLabelQty.Text;
-                    //string StandardQty = txtLotProdQty.Text;
-                    //string BringRemainQty = txtRemainAdd.Text;
-                    //string MyQty = txtWorkQty.Text;
-                    #endregion
-
-                    LabelPaper_Qty = Lib.ConvertDouble(txtWorkQty.Text.ToString());         // 라벨에 찍혀나올 qty 값.
-                    LabelPaper_Count = Lib.ConvertDouble(txtBoxQty.Text.ToString());            // 라벨 발행 부수.
-
-                    string AllQty = txtWorkQty.Text.ToString(); //2021-11-22 txtTotalLabelQty.Text -> InspectQty로 수정, 포장 팝업 창의 합격수량  
-                    string StandardQty = txtLotProdQty.Text.ToString(); //2021-11-22 txtLotProdQty.Text -> QtyperBox로 수정, 포장 팝업 창의 박스당수량으로 계산하기 위해  
-                    string BringRemainQty = txtRemainAdd.Text;
-                    string MyQty = txtWorkQty.Text.ToString();  //2021-11-22 txtWorkQty.Text -> PassQty로 수정 , 포장 팝업 창의 합격수량으로 계산하기 위해 
-
-
-                    double d_AllQty = 0;            //검사포장에서 검사수량(수량 + 불량)
-                    double d_StandardQty = 0;       //검사포장에서 박스당수량
-                    double d_BringRemainQty = 0;
-                    double d_MyQty = 0;             //검사포장에서 최종수량
-
-
-
-                    Double.TryParse(AllQty, out d_AllQty);
-                    Double.TryParse(StandardQty, out d_StandardQty);
-                    Double.TryParse(BringRemainQty, out d_BringRemainQty);
-                    Double.TryParse(MyQty, out d_MyQty);
-
-                    double d_DefectQty = ConvertDouble(txtDefectQty.Text); //생산불량
-                    //double i_DefectQty = ConvertDouble(DefectQty.ToString()); //검사포장불량
-                    // d
-
-                    if (d_AllQty == 0)
-                    {
-                        Message[0] = "[작업수량]";
-                        Message[1] = "작업수량이 입력되지 않았습니다.";
-                        WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
-                        return;
-                    }
-                    if (d_AllQty < d_DefectQty)
-                    {
-                        Message[0] = "[작업수량]";
-                        Message[1] = "작업수량(" + d_AllQty + ")이 불량수량(" + d_DefectQty + ")보다 작습니다.";
-                        WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
-                        return;
-                    }
-
-                    #region 주석
-                    //if (d_AllQty - d_DefectQty == 0)
-                    //{
-                    //    Message[0] = "[작업수량]";
-                    //    Message[1] = "불량(" + d_DefectQty + ")을 제외한 작업 수량(" + d_AllQty + ")이 0개 입니다.";
-                    //    WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
-                    //    return;
-                    //}
-                    //else 
-                    #endregion
-
-                    if (d_StandardQty == 0)
-                    {
-                        Message[0] = "[기준수량]";
-                        Message[1] = "생산박스 당 수량이 입력되지 않았습니다.";
-                        WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
-                        return;
-                    }
-                }
-
-                InspectQty = Lib.ConvertInt(txtWorkQty.Text);// - Lib.ConvertInt(txtBoxQty.Text); //2022-01-24 작업수량(불량 포함 안함)
-
-                if (SaveStart_OK == true)
-                {
-                    Save_Function(Split_GBN, LabelPaper_Qty, LabelPaper_Count, LabelPaper_OneMoreQty, QtyperBox);
-                }
-        //}
-                else
-                {
+                    WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
                     return;
                 }
+                if (d_AllQty < d_DefectQty)
+                {
+                    Message[0] = "[작업수량]";
+                    Message[1] = "작업수량(" + d_AllQty + ")이 불량수량(" + d_DefectQty + ")보다 작습니다. \r\n" +
+                                    "라벨발행을 중단합니다.";
+                    WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
+                    return;
+                }
+                if (d_AllQty - d_DefectQty == 0)
+                {
+                    Message[0] = "[작업수량]";
+                    Message[1] = "불량(" + d_DefectQty + ")을 제외한 작업 수량(" + d_AllQty + ")이 0개 입니다. \r\n" +
+                                    "라벨발행을 중단합니다.";
+                    WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
+                    return;
+                }
+                else if (d_StandardQty == 0)
+                {
+                    Message[0] = "[기준수량]";
+                    Message[1] = "생산박스 당 수량이 입력되지 않았습니다. \r\n" +
+                                "라벨발행을 중단합니다.";
+                    WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
+                    return;
+                }
+
+                #region 주석
+                ////2021-10-15 무조건 통과 되는 거 같아 주석 처리함 (검토 필요)
+                //if (!CheckIsSameWorkTime())
+                //{
+                //    return;
+                //}
+                    
+
+                // 가져온 잔량이 있는 상태에서,
+                //if (Frm_tprc_Main.list_g_tsplit.Count > 0)
+                //{
+
+                //int TotalQty = ConvertInt(txtTotalLabelQty.Text);
+                //int BoxQty = ConvertInt(txtLotProdQty.Text);
+                //int DefectQty = ConvertInt(txtDefectQty.Text);
+                //TotalQty = TotalQty - DefectQty;
+
+                    
+                //int value = ((int)d_StandardQty * Frm_tprc_Main.list_g_tsplit.Count) - (int)d_BringRemainQty;
+                //if (value > (int)d_MyQty)
+                //{
+                //    Message[0] = "[박스수량 문제]";
+                //    Message[1] = "최소 " + value.ToString() + "개 이상은 작업해야 박스수량을 맞출 수 있습니다. \r\n" +
+                //        "라벨발행을 중단합니다.";
+                //    WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
+                //    return;
+                //}
+
+
+
+                //int result = 0;
+
+                //if (TotalQty < BoxQty)
+                //{
+                //    result = BoxQty - TotalQty;
+                //}
+                //else if (TotalQty > BoxQty)
+                //{
+                //    result = BoxQty == 0 ? 0 : TotalQty % BoxQty;
+
+                //    if (result != 0)
+                //    {
+                //        result = BoxQty - result;
+                //    }
+                //}
+
+
+                // ↓ 2020.10.19 GLS 한박스가 안되더라고 바코드 출력과 함께 작업 완료 되도록 요청
+                //if (TotalQty < BoxQty)
+                //{
+                //    int result = 0;
+                //    result = BoxQty - TotalQty;
+
+                //    Message[0] = "[박스수량 문제]";
+                //    if (DefectQty > 0)
+                //    {
+                //        Message[1] = "등록된 불량 " + d_DefectQty + "개를 제외하고 최소 " + result.ToString() + "개 이상 \r\n더 작업해야 합니다.";       
+                //    }
+                //    else
+                //    {
+                //        Message[1] = "최소 " + result.ToString() + "개 이상 작업해야합니다.";
+                //    }
+
+                //    Message[1] += "\r\n(잔량 불러오기 기능을 사용하는 경우,\r\n  최소 한 박스 이상 작업을 해야 합니다.)";
+
+                //    WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
+                //    return;
+                //}
+                    
+
+                //}
+                #endregion
+
+                bool PopUp_HeaderMessage = false; // true 라벨 발행 안 함 2022-09-14
+
+                //if (Wh_Ar_LabelPrintYN == "N")
+                //{
+                // PopUp_HeaderMessage = true;
+                //}
+                //else { PopUp_HeaderMessage = false; }
+
+                // 첫 공정으로서 > 전표발행을 담당하는 공정이라면,
+                // 라벨발행 유형 타입을 설정합니다.
+                frm_PopUp_ChoiceLabelPrintType ChoiceType = new frm_PopUp_ChoiceLabelPrintType(d_AllQty - d_DefectQty, d_StandardQty, PopUp_HeaderMessage);
+                //frm_PopUp_ChoiceLabelPrintType ChoiceType = new frm_PopUp_ChoiceLabelPrintType(d_AllQty - i_DefectQty, d_StandardQty, PopUp_HeaderMessage);
+                ChoiceType.Owner = this;
+                ChoiceType.WriteTextEvent += ChoiceType_WriteTextEvent;
+                ChoiceType.ShowDialog();
+
+                void ChoiceType_WriteTextEvent(string Message, double Qty, double PrintCount, double RemainOneMoreQty)
+                {
+                    if (Message == "Cancel")
+                    { 
+                        return; 
+                    }
+                    else
+                    {
+                        Split_GBN = Message;
+                        LabelPaper_Qty = Qty;
+                        LabelPaper_Count = PrintCount;
+                        LabelPaper_OneMoreQty = RemainOneMoreQty;
+                        SaveStart_OK = true;
+                    }
+                }
+            }
+            //2021-09-24 첫공정만 확인 하지 않고 전 공정에서 확인 하기 위해 추가
+            else
+            {
+
+                #region 주석
+                //string AllQty = txtTotalLabelQty.Text;
+                //string StandardQty = txtLotProdQty.Text;
+                //string BringRemainQty = txtRemainAdd.Text;
+                //string MyQty = txtWorkQty.Text;
+                #endregion
+
+                LabelPaper_Qty = Lib.ConvertDouble(txtWorkQty.Text.ToString());         // 라벨에 찍혀나올 qty 값.
+                LabelPaper_Count = Lib.ConvertDouble(txtBoxQty.Text.ToString());            // 라벨 발행 부수.
+
+                string AllQty = txtWorkQty.Text.ToString(); //2021-11-22 txtTotalLabelQty.Text -> InspectQty로 수정, 포장 팝업 창의 합격수량  
+                string StandardQty = txtLotProdQty.Text.ToString(); //2021-11-22 txtLotProdQty.Text -> QtyperBox로 수정, 포장 팝업 창의 박스당수량으로 계산하기 위해  
+                string BringRemainQty = txtRemainAdd.Text;
+                string MyQty = txtWorkQty.Text.ToString();  //2021-11-22 txtWorkQty.Text -> PassQty로 수정 , 포장 팝업 창의 합격수량으로 계산하기 위해 
+
+
+                double d_AllQty = 0;            //검사포장에서 검사수량(수량 + 불량)
+                double d_StandardQty = 0;       //검사포장에서 박스당수량
+                double d_BringRemainQty = 0;
+                double d_MyQty = 0;             //검사포장에서 최종수량
+
+
+
+                Double.TryParse(AllQty, out d_AllQty);
+                Double.TryParse(StandardQty, out d_StandardQty);
+                Double.TryParse(BringRemainQty, out d_BringRemainQty);
+                Double.TryParse(MyQty, out d_MyQty);
+
+                double d_DefectQty = ConvertDouble(txtDefectQty.Text); //생산불량
+                //double i_DefectQty = ConvertDouble(DefectQty.ToString()); //검사포장불량
+                // d
+
+                if (d_AllQty == 0)
+                {
+                    Message[0] = "[작업수량]";
+                    Message[1] = "작업수량이 입력되지 않았습니다.";
+                    WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
+                    return;
+                }
+                if (d_AllQty < d_DefectQty)
+                {
+                    Message[0] = "[작업수량]";
+                    Message[1] = "작업수량(" + d_AllQty + ")이 불량수량(" + d_DefectQty + ")보다 작습니다.";
+                    WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
+                    return;
+                }
+
+                #region 주석
+                //if (d_AllQty - d_DefectQty == 0)
+                //{
+                //    Message[0] = "[작업수량]";
+                //    Message[1] = "불량(" + d_DefectQty + ")을 제외한 작업 수량(" + d_AllQty + ")이 0개 입니다.";
+                //    WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
+                //    return;
+                //}
+                //else 
+                #endregion
+
+                if (d_StandardQty == 0)
+                {
+                    Message[0] = "[기준수량]";
+                    Message[1] = "생산박스 당 수량이 입력되지 않았습니다.";
+                    WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
+                    return;
+                }
+            }
+
+            InspectQty = Lib.ConvertInt(txtWorkQty.Text);// - Lib.ConvertInt(txtBoxQty.Text); //2022-01-24 작업수량(불량 포함 안함)
+
+            if (SaveStart_OK == true)
+            {
+                Save_Function(Split_GBN, LabelPaper_Qty, LabelPaper_Count, LabelPaper_OneMoreQty, QtyperBox);
+            }
+            else
+            {
+                return;
+            }
         }
 
         #region 만약에 같은 시간, 공정, 호기로 작업한게 있다면.. 막기
@@ -2401,7 +2352,7 @@ namespace WizWork
                             //Message[1] = "저장이 완료되었습니다.";
                             //WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 3, 1);
                         }
-                        //LogData.LogSave(this.GetType().Name, "P"); //2022-06-22 인쇄, 재발행
+                        LogData.LogSave(this.GetType().Name, "P"); //2022-06-22 인쇄, 재발행
                     }
                     else
                     {
@@ -3001,7 +2952,43 @@ namespace WizWork
                                 }
                             }
                         }
-                                                
+
+                        #region 주석 금형 등록을 노란 박스 만들면서 등록함 2022-01-25
+                        // '************************************************************************************************
+                        //'                              금형 등록 시   //xp_wkResult_iWkResultMold
+                        //'*************************************************************************************************
+
+                        //2022-01-25 Frm_tprc_Main.list_tMold.Count > 0 이면 금형등록이 되어 있음
+                        if (Frm_tprc_Main.list_tMold.Count > 0)
+                        {
+                            Dictionary<string, object> sqlParameter6 = new Dictionary<string, object>();
+
+                            if (i == 0)
+                            {
+                                sqlParameter6.Add("JobID", list_TWkResult[i].JobID);
+                            }
+                            else
+                            {
+                                sqlParameter6.Add("JobID", 0);
+                            }
+
+                            sqlParameter6.Add("MoldID", Frm_tprc_Main.list_tMold[i].sMoldID);
+                            sqlParameter6.Add("RealCavity", 0);
+                            sqlParameter6.Add("HitCount", list_TWkResult[i].WorkQty);
+                            sqlParameter6.Add("CreateUserID", list_TWkResult[0].CreateUserID);
+
+                            WizCommon.Procedure pro7 = new WizCommon.Procedure();
+                            pro7.Name = "xp_wkResult_iWkResultMold";
+                            pro7.OutputUseYN = "N";
+                            pro7.OutputName = "JobID";
+                            pro7.OutputLength = "20";
+
+                            Prolist.Add(pro7);
+                            ListParameter.Add(sqlParameter6);
+                        }
+
+                        #endregion
+
 
                         //'************************************************************************************************
                         //'                            생산제품 재고 생성 및 하품 자재 출고 처리  //xp_wkResult_iWkResultStuffInOut
@@ -3037,43 +3024,7 @@ namespace WizWork
                         //}
                     }
                 }
-
-                #region 주석 금형 사용 안함(2021-12-07 영승공업)
-                //'************************************************************************************************
-                //'                           사용 금형 등록
-                //'************************************************************************************************ 
-                if (list_TMold != null)
-                {
-                    if (m_ProcessID != "2101" || (m_ProcessID == "2101" && blSHExit))
-                    //성형공정이 아니거나 또는 , 성형공정이면서 작업종료 시점일때만 입력
-                    {
-                        //if (list_TMold.Count > 0)
-                        //{
-                        //    for (int j = 0; j < Frm_tprc_Main.list_tMold.Count; j++)
-                        //    {
-                        //        Dictionary<string, object> sqlParameter = new Dictionary<string, object>();
-
-                        //        sqlParameter.Add("JobID", list_TWkResult[j].JobID);
-                        //        sqlParameter.Add("MoldID", list_TMold[j].sMoldID/*Frm_tprc_Main.list_tMold[j].sMoldID*/);
-                        //        sqlParameter.Add("RealCavity", list_TMold[j].sRealCavity/*Frm_tprc_Main.list_tMold[j].sRealCavity*/);
-                        //        sqlParameter.Add("HitCount", list_TMold[j].sHitCount/*list_TWkResult[i].WorkQty*/);
-                        //        sqlParameter.Add("CreateUserID", list_TWkResult[j].CreateUserID);
-
-                        //        WizCommon.Procedure pro_2 = new WizCommon.Procedure();
-                        //        pro_2.Name = "xp_wkResult_iwkResultMold";
-                        //        pro_2.OutputUseYN = "N";
-                        //        pro_2.OutputName = "JobID";
-                        //        pro_2.OutputLength = "20";
-
-                        //        Prolist.Add(pro_2);
-                        //        ListParameter.Add(sqlParameter);
-                        //    }
-                        //}
-                    }
-
-                }
-                #endregion
-
+              
                 List<KeyValue> list_Result = new List<KeyValue>();
                 list_Result = DataStore.Instance.ExecuteAllProcedureOutputToCS(Prolist, ListParameter);
 
@@ -3418,109 +3369,6 @@ namespace WizWork
                 return;
             }
         }
-        /// <summary>
-        /// '공정이동전표의 정보 가져오기
-        /// </summary>
-        /// <param name="strLotID"></param>
-        /// <param name="strProcessID"></param>
-        /// <param name="strMachineID"></param>
-        /// <param name="strMoldIDList"></param>
-        private void GetWorkLotInfo(string strLotID, string strProcessID, string strMachineID, string strMoldIDList)
-        {
-
-            DataSet ds = null;
-            DataRow dr = null;
-            try
-            {
-                Dictionary<string, object> sqlParameter = new Dictionary<string, object>();
-
-                sqlParameter.Add("PLotID", strLotID);
-                sqlParameter.Add("ProcessID", strProcessID);
-                sqlParameter.Add("MachineID", strMachineID);
-                sqlParameter.Add("MoldIDList", strMoldIDList);
-
-                ds = DataStore.Instance.ProcedureToDataSet("xp_wkresult_sWorkLotID", sqlParameter, false);
-
-                if (ds != null && ds.Tables[0].Rows.Count > 0)
-                {
-                    dr = ds.Tables[0].Rows[0];
-                    double InstQty = 0;
-                    double WorkQty = 0;
-                    double InstRemainQty = 0;
-                    double.TryParse(Lib.GetDouble(dr["InstQty"].ToString()).ToString(), out InstQty);
-                    double.TryParse(Lib.GetDouble(dr["WorkQty"].ToString()).ToString(), out WorkQty);
-                    InstRemainQty = InstQty - WorkQty;
-                    sTdGbn = Lib.CheckNull(dr["TdGbn"].ToString());
-                    txtlInstQty.Text = string.Format("{0:n3}", InstQty);
-                    txtInstRemainQty.Text = string.Format("{0:n3}", InstRemainQty);
-
-                    if (Frm_tprc_Main.list_tMold.Count > 0)
-                    {
-                        string strMoldIDCheck = "";
-                        strMoldIDCheck = dr["MoldIDCheck"].ToString();
-                        if (!(int.Parse(Lib.CheckNum(strMoldIDCheck)) == Frm_tprc_Main.list_tMold.Count))
-                        {
-                            Message[0] = "[금형 오류]";
-                            Message[1] = "선택된 금형은 이 품목의 금형이 아닙니다.";
-                            WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 0, 1);
-                            return;
-                        }
-                        // 'AFT 는 금형 Cavity 가 1 이므로 쓰고 다른 업체일 경우 변경 필요 >> ?? 이해안감..
-                        double douHitCount = 0;
-                        double douRealCavity = 0;
-                        double douWorkQty = 0;
-                        double douSafeHitCount = 0;
-                        for (int i = 0; i < Frm_tprc_Main.list_tMold.Count; i++)
-                        {
-                            double.TryParse(Lib.GetDouble(Frm_tprc_Main.list_tMold[i].sHitCount.ToString()).ToString(), out douHitCount);
-                            double.TryParse(Lib.GetDouble(Frm_tprc_Main.list_tMold[i].sRealCavity.ToString()).ToString(), out douRealCavity);                            
-                            double.TryParse(Lib.GetDouble(Frm_tprc_Main.list_tMold[i].sSafeHitCount.ToString()).ToString(), out douSafeHitCount);
-
-                            if (douHitCount /*+ douWorkQty / douRealCavity */> douSafeHitCount)
-                            {
-                                Message[0] = "[금형 오류]";
-                                Message[1] = "선택된 금형 중 생산 진행 시 타발수가 한계수명을 넘어가는 금형이 있습니다. (" + Frm_tprc_Main.list_tMold[i].sLotNo + ")";
-                                WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 0, 1);
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception excpt)
-            {
-                WizCommon.Popup.MyMessageBox.ShowBox(string.Format("오류! 관리자에게 문의<GetWorkLotInfo>\r\n{0}", excpt.Message), "[오류]", 0, 1);
-            }
-        }
-
-        private bool CheckID(string strBoxID)
-        {
-            try
-            {
-                if (!BarCodeCheck(strBoxID,""))
-                {
-                    throw new Exception();
-                }
-                if (GridData2.Rows.Count > 0)
-                {
-                    foreach (DataGridViewRow dgvr in GridData2.Rows)
-                    {
-                        if (dgvr.Cells["BarCode"].Value.ToString().Trim() == "")
-                        {
-                            Message[0] = "[하위품 체크 오류]";
-                            Message[1] = dgvr.Cells["Article"].Value.ToString() + "\r\n" + "하위품이 선택되지 않았습니다. 하위품을 스캔해주십시오.";
-                            throw new Exception();
-                        }
-                    }
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                WizCommon.Popup.MyMessageBox.ShowBox(Message[1], Message[0], 0, 1);
-                return false;
-            }
-        }
 
         private string GetItemText(int inti)
         {
@@ -3607,24 +3455,6 @@ namespace WizWork
         {
             return Strings.Len(sText) == Strings.Len(Strings.StrConv(sText, VbStrConv.Narrow, 0)) ? true : false;
         }
-
-        private string GetBarCodeItemText(int inti)
-        {
-            string _GetBarCodeItemText = "";
-            bool bFound = false;
-            _GetBarCodeItemText = GetItemText(inti);
-            for (int i = 0; i < list_m_tItem.Count; i++)
-            {
-                if (list_m_tItem[i].nPrevItem - 1 == inti)
-                {
-                    _GetBarCodeItemText = _GetBarCodeItemText + GetItemText(i);
-                    bFound = true;
-                    break;
-                }
-            }
-            return _GetBarCodeItemText;
-        }
-
 
         public bool SendWindowDllCommand(List<string> vData, string sTagID, int nPrintCount, int nDefectCnt)
         {
@@ -4308,16 +4138,16 @@ namespace WizWork
             string strInstID = "";
             try
             {
-                string sMoldID = "";
-                if (Frm_tprc_Main.list_tMold.Count > 0)
-                {
-                    sMoldID = Frm_tprc_Main.list_tMold[0].sMoldID;
-                }
+                //string sMoldID = "";
+                //if (Frm_tprc_Main.list_tMold.Count > 0)
+                //{
+                //    sMoldID = Frm_tprc_Main.list_tMold[0].sMoldID;
+                //}
 
                 Dictionary<string, object> sqlParameter = new Dictionary<string, object>();
                 sqlParameter.Add("PLotID", strBarCode);
                 sqlParameter.Add("ProcessID", m_ProcessID); //SearchProcessID());                
-                sqlParameter.Add("MoldID", sMoldID);
+                sqlParameter.Add("MoldID", "");
 
                 DataTable dt = DataStore.Instance.ProcedureToDataTable("xp_WizWork_Chkworklotid", sqlParameter, false);
 

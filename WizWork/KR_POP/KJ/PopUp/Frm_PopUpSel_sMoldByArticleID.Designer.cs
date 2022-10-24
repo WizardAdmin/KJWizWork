@@ -60,9 +60,8 @@
             this.pnlForm.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlForm.Controls.Add(this.tlpMain);
             this.pnlForm.Location = new System.Drawing.Point(0, 0);
-            this.pnlForm.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pnlForm.Name = "pnlForm";
-            this.pnlForm.Size = new System.Drawing.Size(875, 450);
+            this.pnlForm.Size = new System.Drawing.Size(766, 360);
             this.pnlForm.TabIndex = 191;
             // 
             // tlpMain
@@ -72,24 +71,23 @@
             this.tlpMain.Controls.Add(this.panel1, 0, 0);
             this.tlpMain.Controls.Add(this.tlpOC, 0, 2);
             this.tlpMain.Controls.Add(this.grdData, 0, 1);
-            this.tlpMain.Location = new System.Drawing.Point(3, 10);
+            this.tlpMain.Location = new System.Drawing.Point(3, 8);
             this.tlpMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tlpMain.Name = "tlpMain";
             this.tlpMain.RowCount = 3;
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tlpMain.Size = new System.Drawing.Size(866, 428);
+            this.tlpMain.Size = new System.Drawing.Size(758, 342);
             this.tlpMain.TabIndex = 191;
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.tableLayoutPanel1);
-            this.panel1.Location = new System.Drawing.Point(3, 4);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(792, 34);
+            this.panel1.Size = new System.Drawing.Size(693, 28);
             this.panel1.TabIndex = 191;
             // 
             // tableLayoutPanel1
@@ -106,17 +104,16 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(843, 36);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(738, 29);
             this.tableLayoutPanel1.TabIndex = 191;
             // 
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.btnArticle);
-            this.panel2.Location = new System.Drawing.Point(3, 4);
-            this.panel2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(228, 28);
+            this.panel2.Size = new System.Drawing.Size(200, 23);
             this.panel2.TabIndex = 192;
             // 
             // btnArticle
@@ -126,9 +123,8 @@
             this.btnArticle.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnArticle.ForeColor = System.Drawing.Color.White;
             this.btnArticle.Location = new System.Drawing.Point(3, -1);
-            this.btnArticle.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnArticle.Name = "btnArticle";
-            this.btnArticle.Size = new System.Drawing.Size(246, 29);
+            this.btnArticle.Size = new System.Drawing.Size(215, 23);
             this.btnArticle.TabIndex = 222;
             this.btnArticle.Text = "품명 / 금형";
             this.btnArticle.UseVisualStyleBackColor = false;
@@ -137,10 +133,10 @@
             // txtArticle
             // 
             this.txtArticle.Font = new System.Drawing.Font("맑은 고딕", 22F);
-            this.txtArticle.Location = new System.Drawing.Point(255, 2);
+            this.txtArticle.Location = new System.Drawing.Point(224, 2);
             this.txtArticle.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtArticle.Name = "txtArticle";
-            this.txtArticle.Size = new System.Drawing.Size(100, 56);
+            this.txtArticle.Size = new System.Drawing.Size(88, 47);
             this.txtArticle.TabIndex = 218;
             this.txtArticle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtArticle_KeyPress);
             // 
@@ -149,10 +145,10 @@
             this.btnSearch.Font = new System.Drawing.Font("맑은 고딕", 12.25F, System.Drawing.FontStyle.Bold);
             this.btnSearch.Image = global::WizWork.Properties.Resources.icons8_search_48;
             this.btnSearch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSearch.Location = new System.Drawing.Point(676, 2);
+            this.btnSearch.Location = new System.Drawing.Point(593, 2);
             this.btnSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(101, 30);
+            this.btnSearch.Size = new System.Drawing.Size(88, 24);
             this.btnSearch.TabIndex = 221;
             this.btnSearch.Text = "검색";
             this.btnSearch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -170,14 +166,13 @@
             this.tlpOC.Controls.Add(this.btnCancel, 1, 1);
             this.tlpOC.Controls.Add(this.btnUp, 0, 0);
             this.tlpOC.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tlpOC.Location = new System.Drawing.Point(3, 345);
-            this.tlpOC.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tlpOC.Location = new System.Drawing.Point(3, 276);
             this.tlpOC.Name = "tlpOC";
             this.tlpOC.RowCount = 2;
             this.tlpOC.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpOC.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpOC.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tlpOC.Size = new System.Drawing.Size(860, 79);
+            this.tlpOC.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpOC.Size = new System.Drawing.Size(752, 63);
             this.tlpOC.TabIndex = 190;
             // 
             // btnOK
@@ -187,10 +182,10 @@
             this.btnOK.FlatAppearance.BorderSize = 0;
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOK.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnOK.Location = new System.Drawing.Point(0, 39);
+            this.btnOK.Location = new System.Drawing.Point(0, 31);
             this.btnOK.Margin = new System.Windows.Forms.Padding(0);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(430, 40);
+            this.btnOK.Size = new System.Drawing.Size(376, 32);
             this.btnOK.TabIndex = 5;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = false;
@@ -202,10 +197,10 @@
             this.btnDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDown.Font = new System.Drawing.Font("맑은 고딕", 18F, System.Drawing.FontStyle.Bold);
             this.btnDown.Image = ((System.Drawing.Image)(resources.GetObject("btnDown.Image")));
-            this.btnDown.Location = new System.Drawing.Point(433, 5);
-            this.btnDown.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.btnDown.Location = new System.Drawing.Point(379, 4);
+            this.btnDown.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnDown.Name = "btnDown";
-            this.btnDown.Size = new System.Drawing.Size(216, 29);
+            this.btnDown.Size = new System.Drawing.Size(189, 23);
             this.btnDown.TabIndex = 186;
             this.btnDown.UseVisualStyleBackColor = false;
             this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
@@ -217,10 +212,10 @@
             this.btnCancel.FlatAppearance.BorderSize = 0;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold);
-            this.btnCancel.Location = new System.Drawing.Point(430, 39);
+            this.btnCancel.Location = new System.Drawing.Point(376, 31);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(430, 40);
+            this.btnCancel.Size = new System.Drawing.Size(376, 32);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -232,10 +227,10 @@
             this.btnUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUp.Font = new System.Drawing.Font("맑은 고딕", 18F, System.Drawing.FontStyle.Bold);
             this.btnUp.Image = ((System.Drawing.Image)(resources.GetObject("btnUp.Image")));
-            this.btnUp.Location = new System.Drawing.Point(3, 5);
-            this.btnUp.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.btnUp.Location = new System.Drawing.Point(3, 4);
+            this.btnUp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnUp.Name = "btnUp";
-            this.btnUp.Size = new System.Drawing.Size(216, 29);
+            this.btnUp.Size = new System.Drawing.Size(189, 23);
             this.btnUp.TabIndex = 187;
             this.btnUp.UseVisualStyleBackColor = false;
             this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
@@ -258,8 +253,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.grdData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.grdData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdData.Location = new System.Drawing.Point(3, 46);
-            this.grdData.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.grdData.Location = new System.Drawing.Point(3, 37);
             this.grdData.MultiSelect = false;
             this.grdData.Name = "grdData";
             this.grdData.ReadOnly = true;
@@ -269,17 +263,16 @@
             this.grdData.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.grdData.RowTemplate.Height = 23;
             this.grdData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdData.Size = new System.Drawing.Size(439, 291);
+            this.grdData.Size = new System.Drawing.Size(384, 233);
             this.grdData.TabIndex = 0;
             // 
             // Frm_PopUpSel_sMoldByArticleID
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(889, 452);
+            this.ClientSize = new System.Drawing.Size(778, 362);
             this.Controls.Add(this.pnlForm);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Frm_PopUpSel_sMoldByArticleID";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "품명 or 품번 선택";

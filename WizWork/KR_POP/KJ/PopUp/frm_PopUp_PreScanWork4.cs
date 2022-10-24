@@ -1253,8 +1253,30 @@ namespace WizWork
                         }
                     }
                 }
-              
                 #endregion
+
+                //2022-10-18 금형 추가
+                if (Frm_tprc_Main.list_tMold.Count > 0)
+                {
+                    for (int i = 0; i < Frm_tprc_Main.list_tMold.Count; i++)
+                    {
+                        Dictionary<string, object> sqlParameter3 = new Dictionary<string, object>();
+                        sqlParameter3.Add("JobID", "");
+                        sqlParameter3.Add("MoldID", Frm_tprc_Main.list_tMold[i].sMoldID);//
+                        sqlParameter3.Add("RealCavity", 0);
+                        sqlParameter3.Add("HitCount", 0);
+                        sqlParameter3.Add("CreateUserID", Frm_tprc_Main.g_tBase.PersonID);
+
+                        WizCommon.Procedure pro3 = new WizCommon.Procedure();
+                        pro3.Name = "xp_wkResult_iWkResultMold";
+                        pro3.OutputUseYN = "N";
+                        pro3.OutputName = "JobID";
+                        pro3.OutputLength = "20";
+
+                        Prolist.Add(pro3);
+                        ListParameter.Add(sqlParameter3);
+                    }
+                }
 
                 List<KeyValue> list_Result = new List<KeyValue>();
                 list_Result = DataStore.Instance.ExecuteAllProcedureOutputToCS(Prolist, ListParameter);

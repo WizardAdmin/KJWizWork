@@ -87,7 +87,7 @@ namespace WizWork
             // 디자인단에서 설정한 메서드를 소스에서 설정함.
             this.Activated += Frm_tprc_PlanInput_Q_Activated;
 
-            btnThisMonth_Click(null, null);
+            //btnThisMonth_Click(null, null);
             chkComplete.Checked = true;
 
             procQuery();
@@ -124,8 +124,13 @@ namespace WizWork
                     break;
                 }
             }
-            mtb_From.Text = DateTime.Today.AddDays(-Days).ToString("yyyyMMdd");
-            mtb_To.Text = DateTime.Today.ToString("yyyyMMdd");
+            //mtb_From.Text = DateTime.Today.AddDays(-Days).ToString("yyyyMMdd");
+            //mtb_To.Text = DateTime.Today.ToString("yyyyMMdd");
+
+            //2022-09-15 오늘을 기준으로 1주일 기간이 보이도록 수정
+            mtb_From.Text = DateTime.Today.ToString("yyyyMMdd");
+            mtb_To.Text = DateTime.Today.AddDays(7).ToString("yyyyMMdd");
+
         }
         private void InitPanel()
         {
@@ -1507,10 +1512,10 @@ namespace WizWork
                                                 dt2.Rows.Add(dr.ItemArray);
                                                 break;
                                             }
-                                        }                                        
+                                        }
                                     }
                                 }
-                            }                            
+                            }
                         }
                     }
                     //if (!chkOK)
@@ -1542,7 +1547,7 @@ namespace WizWork
                             if (w == 10) { btnMoldW10.Text = MachineName[9]; }
                         }
                     }
-                }               
+                }
                 dt = null;
 
                 ////
@@ -1575,7 +1580,7 @@ namespace WizWork
 
                 foreach (DataRow dr in dt3.Rows)
                 {
-                                            
+
                     PersonName = dr["Name"].ToString().Trim();
                     Lotid = dr["LabelID"].ToString().Trim();
                     Machine_Name = dr["MachineNo"].ToString().Trim();
@@ -2062,37 +2067,46 @@ namespace WizWork
             //    }
             //}
             #endregion
-            if (ConvertInt(Frm_tprc_Main.g_tBase.sInstDetSeq) == 1)
-            {
-                //라벨 스캔
-                frm_PopUp_PreScanWork_Grid4 FPPSW = new frm_PopUp_PreScanWork_Grid4(processid, machindid, moldid);
-                FPPSW.StartPosition = FormStartPosition.CenterScreen;
-                FPPSW.BringToFront();
-                FPPSW.TopMost = true;
 
-                if (FPPSW.ShowDialog() == DialogResult.OK)
+            Frm_tprc_Mold_Q FTMQ = new Frm_tprc_Mold_Q(Frm_tprc_Main.g_tBase.sLotID, Frm_tprc_Main.g_tBase.Process, machindid);
+            FTMQ.StartPosition = FormStartPosition.CenterScreen;
+            FTMQ.BringToFront();
+            FTMQ.TopMost = false;
+
+            if (FTMQ.ShowDialog() == DialogResult.OK)
+            {
+                if (ConvertInt(Frm_tprc_Main.g_tBase.sInstDetSeq) == 1)
                 {
-                    // ok라는건, 새로운 시작처리가 하나 있다는 것.
-                    // re_search.
-                    procQuery();
-                    WorkingMachine_btnSetting();
-                    LogData.LogSave(this.GetType().Name, "R"); //2022-06-22 조회
+                    //라벨 스캔
+                    frm_PopUp_PreScanWork_Grid4 FPPSW = new frm_PopUp_PreScanWork_Grid4(processid, machindid, moldid);
+                    FPPSW.StartPosition = FormStartPosition.CenterScreen;
+                    FPPSW.BringToFront();
+                    FPPSW.TopMost = true;
+
+                    if (FPPSW.ShowDialog() == DialogResult.OK)
+                    {
+                        // ok라는건, 새로운 시작처리가 하나 있다는 것.
+                        // re_search.
+                        procQuery();
+                        WorkingMachine_btnSetting();
+                        LogData.LogSave(this.GetType().Name, "R"); //2022-06-22 조회
+                    }
                 }
-            }
-            else
-            {
-                //라벨 선택
-                frm_PopUp_PreScanWork4 FPPSW = new frm_PopUp_PreScanWork4(processid, machindid, moldid);
-                FPPSW.StartPosition = FormStartPosition.CenterScreen;
-                FPPSW.BringToFront();
-                FPPSW.TopMost = true;
-
-                if (FPPSW.ShowDialog() == DialogResult.OK)
+                else
                 {
-                    // ok라는건, 새로운 시작처리가 하나 있다는 것.
-                    // re_search.
-                    procQuery();
-                    WorkingMachine_btnSetting();
+                    //라벨 선택
+                    frm_PopUp_PreScanWork4 FPPSW = new frm_PopUp_PreScanWork4(processid, machindid, moldid);
+                    FPPSW.StartPosition = FormStartPosition.CenterScreen;
+                    FPPSW.BringToFront();
+                    FPPSW.TopMost = true;
+
+                    if (FPPSW.ShowDialog() == DialogResult.OK)
+                    {
+                        // ok라는건, 새로운 시작처리가 하나 있다는 것.
+                        // re_search.
+                        procQuery();
+                        WorkingMachine_btnSetting();
+                    }
                 }
             }
         }

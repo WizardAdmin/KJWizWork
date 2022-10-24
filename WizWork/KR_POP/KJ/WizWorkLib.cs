@@ -1443,7 +1443,6 @@ namespace WizWork
         private int _sHitCount = 0;
         private int _sSafeHitCount = 0;
 
-
         public string sMoldID
         {
             get { return _sMoldID; }
@@ -1487,7 +1486,6 @@ namespace WizWork
             this.sLotNo = "";
             this.sCavity = 0;
             this.sSafeHitCount = 0;
-
 
         }
         public void DataClear()

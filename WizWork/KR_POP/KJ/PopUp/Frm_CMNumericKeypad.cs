@@ -155,7 +155,7 @@ namespace WizWork.POPUP
                 btnTitle.Text = g_Name ;
                 this.btnTitle.ForeColor = System.Drawing.Color.White;
             }
-            if (g_Name == "시작시간" || g_Name == "종료시간" || btnTitle.Text == "시작시간" || btnTitle.Text == "종료시간" || g_Name =="교체시간" || btnTitle.Text =="교체시간") //2022-03-07
+            if (g_Name == "시작시간" || g_Name == "종료시간" || btnTitle.Text == "시작시간" || btnTitle.Text == "종료시간" || g_Name =="교체시간" || btnTitle.Text =="교체시간" || btnTitle.Text == "호출시간") //2022-03-07, 2022-10-20
             {
                 tbInputText.MaxLength = 6;
                 tbInputText.Text = KeypadStr;
@@ -259,7 +259,7 @@ namespace WizWork.POPUP
                         }
                     }
                 }
-                if (this.btnTitle.Text.Contains("시작시간") || this.btnTitle.Text.Contains("종료시간") || this.btnTitle.Text.Contains("교체시간")) //2022-03-07
+                if (this.btnTitle.Text.Contains("시작시간") || this.btnTitle.Text.Contains("종료시간") || this.btnTitle.Text.Contains("교체시간") || this.btnTitle.Text.Contains("호출시간")) //2022-03-07 , 2022-10-20
                 {
                     SetTime();
                 }

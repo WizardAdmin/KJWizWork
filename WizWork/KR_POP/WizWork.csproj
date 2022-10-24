@@ -159,11 +159,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KJ\frm_tprc_WorkCall_Q.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KJ\frm_tprc_WorkCall_Q.designer.cs">
+      <DependentUpon>frm_tprc_WorkCall_Q.cs</DependentUpon>
+    </Compile>
     <Compile Include="KJ\frm_tprc_CardRePrint_U.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="KJ\frm_tprc_CardRePrint_U.designer.cs">
       <DependentUpon>frm_tprc_CardRePrint_U.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KJ\frm_tprc_Mold_Q.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KJ\frm_tprc_Mold_Q.designer.cs">
+      <DependentUpon>frm_tprc_Mold_Q.cs</DependentUpon>
     </Compile>
     <Compile Include="KJ\Frm_tprc_PlanInputMolded_Q.cs">
       <SubType>Form</SubType>
@@ -375,6 +387,18 @@
     <Compile Include="KJ\PopUp\frm_mtr_RemainMove_Q.Designer.cs">
       <DependentUpon>frm_mtr_RemainMove_Q.cs</DependentUpon>
     </Compile>
+    <Compile Include="KJ\PopUp\frm_tprc_WorkCall_QU.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KJ\PopUp\frm_tprc_WorkCall_QU.designer.cs">
+      <DependentUpon>frm_tprc_WorkCall_QU.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KJ\PopUp\frm_tprc_WorkCall_U.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KJ\PopUp\frm_tprc_WorkCall_U.designer.cs">
+      <DependentUpon>frm_tprc_WorkCall_U.cs</DependentUpon>
+    </Compile>
     <Compile Include="KJ\PopUp\frm_tprc_UseTool_U.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -436,8 +460,14 @@
     <EmbeddedResource Include="KJ\Frm_Info.resx">
       <DependentUpon>Frm_Info.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="KJ\frm_tprc_WorkCall_Q.resx">
+      <DependentUpon>frm_tprc_WorkCall_Q.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="KJ\frm_tprc_CardRePrint_U.resx">
       <DependentUpon>frm_tprc_CardRePrint_U.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KJ\frm_tprc_Mold_Q.resx">
+      <DependentUpon>frm_tprc_Mold_Q.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="KJ\Frm_tprc_PlanInputMolded_Q.resx">
       <DependentUpon>Frm_tprc_PlanInputMolded_Q.cs</DependentUpon>
@@ -546,6 +576,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="KJ\PopUp\frm_mtr_RemainMove_Q.resx">
       <DependentUpon>frm_mtr_RemainMove_Q.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KJ\PopUp\frm_tprc_WorkCall_QU.resx">
+      <DependentUpon>frm_tprc_WorkCall_QU.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KJ\PopUp\frm_tprc_WorkCall_U.resx">
+      <DependentUpon>frm_tprc_WorkCall_U.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="KJ\PopUp\frm_tprc_UseTool_U.resx">
       <DependentUpon>frm_tprc_UseTool_U.cs</DependentUpon>
@@ -1572,6 +1608,7 @@
     <Content Include="Resources\Check_32pix.png" />
     <None Include="Resources\NoImage.png" />
     <None Include="Resources\NoImageByConnect.png" />
+    <None Include="Resources\manager.png" />
     <Content Include="Resources\QuantityChange.png" />
     <Content Include="Resources\transfer_32pix.png" />
     <Content Include="Resources\worker.png" />

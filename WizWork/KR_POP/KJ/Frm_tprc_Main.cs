@@ -54,6 +54,7 @@ namespace WizWork
         public static List<Sub_TWkLabelPrint> list_TWkLabelPrint = new List<Sub_TWkLabelPrint>();
         public static Sub_TWkResult Sub_TWkResult = new Sub_TWkResult();
         public static Sub_TWkResultArticleChild Sub_TWkResultArticleChild = new Sub_TWkResultArticleChild();
+
         LogData LogData = new LogData(); //2022-06-21 log 남기는 함수
         //public static TagPrint tagPrint = new TagPrint();
         public static GlobalVar gv = new GlobalVar();
@@ -344,6 +345,18 @@ namespace WizWork
                     //    }
                     //    break;
 
+                    //현장 호출 추가 2022-10-20
+                    case 15:
+                        btnimage(15);
+                        frm_tprc_WorkCall_U child10 = new frm_tprc_WorkCall_U();
+                        child10.StartPosition = FormStartPosition.CenterScreen;
+                        child10.Owner = this;
+                        if (child10.ShowDialog() == DialogResult.OK)
+                        {
+
+                        };
+                        break;
+
                     case 18:
                         btnimage(18);
                         frm_tprc_setProcess child9 = new frm_tprc_setProcess(true);//NoWork == true라는 bool값
@@ -526,6 +539,7 @@ namespace WizWork
                 btnRePrint.BackgroundImage = null;
                 btnWorkQ.BackgroundImage = null;
                 btnChoiceWorker.BackgroundImage = null;
+                btnCall.BackgroundImage = null;
                 btnSetting.BackgroundImage = null;
                 btnExit.BackgroundImage = null;
             }
@@ -540,6 +554,7 @@ namespace WizWork
                 btnRePrint.BackgroundImage = null;
                 btnWorkQ.BackgroundImage = null;
                 btnChoiceWorker.BackgroundImage = null;
+                btnCall.BackgroundImage = null;
                 btnSetting.BackgroundImage = null;
                 btnExit.BackgroundImage = null;
             }
@@ -554,6 +569,7 @@ namespace WizWork
                 btnRePrint.BackgroundImage = null;
                 btnWorkQ.BackgroundImage = null;
                 btnChoiceWorker.BackgroundImage = null;
+                btnCall.BackgroundImage = null;
                 btnSetting.BackgroundImage = null;
                 btnExit.BackgroundImage = null;
             }
@@ -568,6 +584,7 @@ namespace WizWork
                 btnRePrint.BackgroundImage = null;
                 btnWorkQ.BackgroundImage = null;
                 btnChoiceWorker.BackgroundImage = null;
+                btnCall.BackgroundImage = null;
                 btnSetting.BackgroundImage = null;
                 btnExit.BackgroundImage = null;
             }
@@ -582,6 +599,7 @@ namespace WizWork
                 btnRePrint.BackgroundImage = null;
                 btnWorkQ.BackgroundImage = null;
                 btnChoiceWorker.BackgroundImage = null;
+                btnCall.BackgroundImage = null;
                 btnSetting.BackgroundImage = null;
                 btnExit.BackgroundImage = null;
             }
@@ -596,6 +614,7 @@ namespace WizWork
                 btnRePrint.BackgroundImage = null;
                 btnWorkQ.BackgroundImage = null;
                 btnChoiceWorker.BackgroundImage = null;
+                btnCall.BackgroundImage = null;
                 btnSetting.BackgroundImage = null;
                 btnExit.BackgroundImage = null;
             }
@@ -610,6 +629,7 @@ namespace WizWork
                 btnMove.BackgroundImage = null;
                 btnWorkQ.BackgroundImage = null;
                 btnChoiceWorker.BackgroundImage = null;
+                btnCall.BackgroundImage = null;
                 btnSetting.BackgroundImage = null;
                 btnExit.BackgroundImage = null;
             }
@@ -623,6 +643,22 @@ namespace WizWork
                 btnNoWork.BackgroundImage = null;
                 btnMove.BackgroundImage = null;
                 btnRePrint.BackgroundImage = null;
+                btnChoiceWorker.BackgroundImage = null;
+                btnCall.BackgroundImage = null;
+                btnSetting.BackgroundImage = null;
+                btnExit.BackgroundImage = null;
+            }
+            else if (casenum == 15)
+            {
+                btnCall.BackgroundImage = Properties.Resources.correct_mark__1_;
+                btnInfo.BackgroundImage = null;
+                btnDailyCheck.BackgroundImage = null;
+                btnInsInspectAuto.BackgroundImage = null;
+                btnWork.BackgroundImage = null;
+                btnNoWork.BackgroundImage = null;
+                btnMove.BackgroundImage = null;
+                btnRePrint.BackgroundImage = null;
+                btnWorkQ.BackgroundImage = null;
                 btnChoiceWorker.BackgroundImage = null;
                 btnSetting.BackgroundImage = null;
                 btnExit.BackgroundImage = null;
@@ -638,6 +674,7 @@ namespace WizWork
                 btnMove.BackgroundImage = null;
                 btnRePrint.BackgroundImage = null;
                 btnWorkQ.BackgroundImage = null;
+                btnCall.BackgroundImage = null;
                 btnSetting.BackgroundImage = null;
                 btnExit.BackgroundImage = null;
             }
@@ -653,6 +690,7 @@ namespace WizWork
                 btnRePrint.BackgroundImage = null;
                 btnWorkQ.BackgroundImage = null;
                 btnChoiceWorker.BackgroundImage = null;
+                btnCall.BackgroundImage = null;
                 btnExit.BackgroundImage = null;
             }
             else if (casenum == 20)
@@ -667,6 +705,7 @@ namespace WizWork
                 btnRePrint.BackgroundImage = null;
                 btnWorkQ.BackgroundImage = null;
                 btnChoiceWorker.BackgroundImage = null;
+                btnCall.BackgroundImage = null;
                 btnSetting.BackgroundImage = null;
             }
         }
@@ -844,6 +883,8 @@ namespace WizWork
             //btnDailyCheckQ.Tag = "12";
             //btnDailyMoldQ.Tag = "13";
 
+
+            btnCall.Tag = "15"; //2022-10-20 현장 호출 추가
             btnChoiceWorker.Tag = "18";
             btnSetting.Tag = "19";
             btnExit.Tag = "20";

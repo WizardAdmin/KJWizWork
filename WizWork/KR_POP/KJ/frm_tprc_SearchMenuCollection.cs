@@ -78,6 +78,10 @@ namespace WizWork
                         frm_mtr_RemainMove_Q child3 = new frm_mtr_RemainMove_Q();
                         form = child3;
                         break;
+                    case 4:     //잔량 이동처리 조회
+                        frm_tprc_WorkCall_Q child4 = new frm_tprc_WorkCall_Q();
+                        form = child4;
+                        break;
                     case 5:     //설비점검 조회
                         Frm_tprc_DailMachineCheck_Q child5 = new Frm_tprc_DailMachineCheck_Q();
                         form = child5;
